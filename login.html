@@ -393,7 +393,7 @@ messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g
                     var userData = doc.data();
                     var profileImage = userData.profilePhotoURL || 'path/to/default/image.png';
                   var username = userData.username || 'Unknown User';
-                  var userLink = window.location.origin + '/p/user.html?user=' + username;
+                  var userLink = window.location.origin + '/' + username;
 
                   var formattedMessageContent = messageContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
 
@@ -463,7 +463,7 @@ some text
         function showUserLink(username) {
             var userLinkContainer = document.getElementById('userLinkContainer');
             var userLinkDiv = document.getElementById('userLink');
-            var userLink = window.location.origin + '/p/user.html?user=' + username;
+            var userLink = window.location.origin + '/' + username;
 
             userLinkDiv.textContent = userLink;
             userLinkContainer.style.display = 'block';
