@@ -6,7 +6,6 @@
 
     <title>Login</title>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
@@ -60,7 +59,18 @@
         #userLinkContainer {
             display: none;
             margin-top: 0px;
+          text-align: center; 
+background: #f6f7f9;
+padding: 20px 0px;
+border-radius: 10px;
         }
+      .userlink {
+    cursor: pointer;
+    color: #a3a5a7;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+      }
         .copy-btn {
        background-color: transparent;
          color: red;
@@ -208,7 +218,12 @@
         border-radius: 10px;
       }
       
-
+.msgbx {
+ margin-top: 10px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ border-radius:20px;
+ width: 340px;
+      }
         .msgbx .profile {
           display: flex;
           align-items: center;
@@ -271,7 +286,19 @@
        font-size:14px;
        text-align: center;
       }
-
+.modalclose {
+    position: absolute;
+    right: 20px;
+    top:20px;
+    z-index: 2000;
+    color:red;
+    background: transparent;
+    border:0px solid red;
+    border-radius: 50px;
+    padding: 5px;
+    font-weight: bold;
+    font-size:36px;
+      }
 
 /* Header and Navbar Styles */
 .header {
@@ -418,9 +445,9 @@
                </div>
 
       
-        <div id="userLinkContainer" style="text-align: center; background: #f6f7f9; padding: 20px 0px; border-radius: 10px;">
+        <div id="userLinkContainer">
     <div style="font-weight: bold;">Copy Your Link</div>
-    <div id="userLink" style="cursor: pointer;color: #a3a5a7;"></div>
+    <div id="userLink" class="userlink"></div>
             <button class="copy-btn" onclick="copyLink()">Copy Link</button>
             
         </div>
@@ -541,14 +568,13 @@ messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g
                     overlay.style.padding = '0px';
                     overlay.innerHTML = `
         <div style="height:100%;">
-   <div style="text-align: center; width: 100%; padding: 30px 0px;">
+   <div style="
+   text-align: center;
+   width: 100%;
+   padding: 30px 0px;">
 <div class="logo">DakBaksho</div>
    </div>
-                   <div class="msgbx" style="margin-top: 10px;
- box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
- border-radius:20px;
- width: 340px;">
-    
+       <div class="msgbx">
         <div class="profile">
             <img src="${profileImage}" alt="Profile Picture">
             <div class="details">
@@ -561,26 +587,14 @@ messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g
         </div>
 </div>
                    
-    <button style="
-    position: absolute;
-    right: 20px;
-    top:20px;
-    z-index: 2000;
-    color:red;
-    background: transparent;
-    border:0px solid red;
-    border-radius: 50px;
-    padding: 5px;
-    font-weight: bold;
-    font-size:36px;" onclick="closeFullscreen(this.parentNode.parentNode)">&times;</button>
+    <button class="modalclose" onclick="closeFullscreen(this.parentNode.parentNode)">&times;</button>
     </div>
     
    <div class="linkcontainer">
     <div>Send me Anonymous Message on</div>
     <div style="color: #a3a5a7;">${userLink}</div>
    </div>
-                    
-                    `;
+   `;
                     document.body.appendChild(overlay);
                 }
             });
