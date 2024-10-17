@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta property="og:title" content="Send Anonymous Message to @" id="ogTitle">
-    <meta property="og:description" content="Send an anonymous message to this user!" id="ogDescription">
-    <meta property="og:image" content="" id="ogImage">
-    <meta property="og:url" content="" id="ogUrl">
+    <title>Send Anonymous Message</title>
     
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" id="ogTitle" content="Anonymous Message">
+    <meta property="og:description" id="ogDescription" content="Send anonymous messages!">
+    <meta property="og:image" id="ogImage" content="">
+    <meta property="og:url" content="https://yourwebsite.com">
+
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Send Anonymous Message to @" id="twitterTitle">
-    <meta name="twitter:description" content="Send an anonymous message to this user!" id="twitterDescription">
-    <meta name="twitter:image" content="" id="twitterImage">
+    <meta name="twitter:title" id="twitterTitle" content="Anonymous Message">
+    <meta name="twitter:description" id="twitterDescription" content="Send anonymous messages!">
+    <meta name="twitter:image" id="twitterImage" content="">
 
-    <meta property="og:image" content="" id="ogImage">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-
-    <title>DakBaksho</title>
-    
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
@@ -29,7 +25,7 @@
      @import url('https://fonts.cdnfonts.com/css/avenir');
        *{
     box-sizing: border-box;
-     }
+}
 
 body {
     display: flex;
@@ -46,7 +42,7 @@ body {
     background-color: transparent;
     border-radius: 0px;
     padding: 0px;
-    margin-top: 30px ! important;
+  margin-top: 30px ! important;
     width: 350px;
     display: flex;
     flex-direction: column;
@@ -178,8 +174,6 @@ body {
 </head>
 <body>
 <div class="container">
-<canvas id="ogCanvas" width="1200" height="630" style="display: none;"></canvas> <!-- Hidden canvas for generating OG image -->
-
  <div class="msg-container">
   <div class="heading">
         <div class="profile">
@@ -213,33 +207,26 @@ body {
 
         var urlParams = new URLSearchParams(window.location.search);
         var username = urlParams.get('user');
-       
-document.title = "DakBaksho : Send Anonymous Message to @" + username;
- document.getElementById('usernameTitle').textContent = "@" + username;
+       document.getElementById('usernameTitle').textContent = "@" + username;
         document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
 
         // Load user's profile image from Firestore
-        db.collection('users').doc(username).get().then((doc) => {
+db.collection('users').doc(username).get().then((doc) => {
             if (doc.exists) {
                 var userData = doc.data();
-                var profileImageURL = userData.profilePhotoURL;
-              document.getElementById('profileImage').src = userData.profilePhotoURL;
-
-document.getElementById('ogTitle').setAttribute('content', "Send Anonymous Message to @" + username);
-
-document.getElementById('ogDescription').setAttribute('content', "Send an anonymous message to @" + username + " on our platform!");
-
-document.getElementById('ogImage').setAttribute('content', profileImageURL);
-
-document.getElementById('ogUrl').setAttribute('content', window.location.href);
-
-                document.getElementById('twitterTitle').setAttribute('content', "Send Anonymous Message to @" + username);
-                document.getElementById('twitterDescription').setAttribute('content', "Send an anonymous message to @" + username + " on our platform!");
-                document.getElementById('twitterImage').setAttribute('content', profileImageURL);
-
-createOGImage(profileImageURL);
+                
+                // Update Meta Tags
+                document.title = "Send Anonymous Message to " + username;
+                document.getElementById('ogTitle').setAttribute("content", "Send Anonymous Message to " + username);
+                document.getElementById('ogDescription').setAttribute("content", "Send anonymous messages to @" + username);
+                document.getElementById('ogImage').setAttribute("content", userData.profilePhotoURL);
+                
+                document.getElementById('twitterTitle').setAttribute("content", "Send Anonymous Message to " + username);
+                document.getElementById('twitterDescription').setAttribute("content", "Send anonymous messages to @" + username);
+                document.getElementById('twitterImage').setAttribute("content", userData.profilePhotoURL);
             }
         });
+
 
         function sendMessage() {
             var message = document.getElementById('messageInput').value.trim().replace(/\n/g, '\\n');
@@ -256,45 +243,6 @@ createOGImage(profileImageURL);
                 alert("Message cannot be empty!");
             }
         }
-
-
-        function createOGImage(profileImageUrl) {
-            // Get the canvas element
-            var canvas = document.getElementById('ogCanvas');
-            var ctx = canvas.getContext('2d');
-
-            // Load the background and profile images
-            var background = new Image();
-            var profileImage = new Image();
-
-            background.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgE78vapcbDCVfkCwffpSyd5gKu9azA0KUUKiNbs-mw9ROYaP6LtEqjEXdlYOjZXchPM48aUM5-h0kklQrBwUm1oLi1FQjiiniCjPE0fgmzhjQQUbHGIe5HKpz0NrvWi9kh-kJ0YR5ff7J44skIyQEwjywthGBXIN6QcTI65n1zqBD2gwaVaB2sUnOkvN0/s888/AlbedoBase_XL_a_big_round_and_red_postbox_for_sending_messages_2.jpg';  // Path to your background image
-            profileImage.src = profileImageUrl;  // User's profile image URL
-
-            // When the background image loads, draw it on the canvas
-            background.onload = function() {
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);  // Draw background
-
-                // Once the background is drawn, load and draw the profile image
-                profileImage.onload = function() {
-                    // Set profile image size and position (adjust as needed)
-                    var profileSize = 200;
-                    var profileX = (canvas.width / 2) - (profileSize / 2);
-                    var profileY = (canvas.height / 2) - (profileSize / 2);
-
-                    // Draw the profile image in the center of the canvas
-                    ctx.drawImage(profileImage, profileX, profileY, profileSize, profileSize);
-
-                    // Convert the canvas to a data URL
-                    var ogImageUrl = canvas.toDataURL('image/jpeg');
-
-                    // Set the og:image dynamically
-                    document.getElementById('ogImage').setAttribute('content', ogImageUrl);
-
-                    console.log("OG Image URL:", ogImageUrl);  // For debugging
-                };
-            };
-        }
-
     </script>
 
 </body>
