@@ -1,0 +1,301 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="Send Anonymous Message to @" id="ogTitle">
+    <meta property="og:description" content="Send an anonymous message to this user!" id="ogDescription">
+    <meta property="og:image" content="" id="ogImage">
+    <meta property="og:url" content="" id="ogUrl">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Send Anonymous Message to @" id="twitterTitle">
+    <meta name="twitter:description" content="Send an anonymous message to this user!" id="twitterDescription">
+    <meta name="twitter:image" content="" id="twitterImage">
+
+    <meta property="og:image" content="" id="ogImage">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+
+    <title>DakBaksho</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+
+    <style>
+     @import url('https://fonts.cdnfonts.com/css/avenir');
+       *{
+    box-sizing: border-box;
+     }
+
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
+    background-repeat: no-repeat;
+    font: 14px "Avenir Next", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: transparent;
+    border-radius: 0px;
+    padding: 0px;
+    margin-top: 30px ! important;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.msg-container {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+   border-radius: 30px;
+      }
+      
+.heading {
+  background: white;
+  width:100%;
+  padding:25px 20px 5px 20px;
+  border-radius: 30px 30px 0px 0px;
+}
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.profile-img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+  object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+#usernameTitle {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+#usernamebody {
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+}
+.msgbox {
+  border-radius: 0px 0px 30px 30px;
+  background-color:rgba(255,255,255,0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(6px);
+      }
+      
+.message-box {
+    width: 100%;
+    height:160px;
+    border-radius: 0px;
+    border: none;
+    background-color: transparent;
+    padding:18px 24px ! important;
+    margin-bottom:10px;
+    font-size: 20px;
+    font-weight: 600 ! important;
+    color: black;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.message-box::placeholder {
+    color: rgba(0,0,0,0.32);
+    font-weight: 800 ! important;
+}
+
+
+.anonymous-text {
+    font-size: 12px;
+    color: gray;
+}
+
+.send-btn {
+    background-color: black;
+    color: white;
+    padding: 20px 10px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 330px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+.send-btn:hover {
+    background-color: #333;
+}
+
+      
+        .blinking-textarea {
+            position: relative;
+            font-family: monospace;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Blinking caret effect */
+        .blinking-textarea::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 2px;
+            height: 20px;
+            background-color: black;
+            animation: blink 1s step-end infinite;
+        }
+      
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<canvas id="ogCanvas" width="1200" height="630" style="display: none;"></canvas> <!-- Hidden canvas for generating OG image -->
+
+ <div class="msg-container">
+  <div class="heading">
+        <div class="profile">
+            <img id="profileImage" class="profile-img" alt="Profile Image">
+            <div class="profile-info">
+                <div id="usernameTitle">Name</div>
+                <div id="usernamebody">send anonymous messages!</div>
+            </div>
+        </div>
+  </div>
+  <div class="msgbox">
+        <textarea id="messageInput" class="message-box blinking-textarea" placeholder="Leave an anonymous message..."></textarea>
+  </div>
+ </div><br><br>
+        <button onclick="sendMessage()" class="send-btn">Send!</button>
+    </div>
+
+    <script>
+        // Initialize Firebase with your configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
+            authDomain: "anonymous-messages-692c3.firebaseapp.com",
+            projectId: "anonymous-messages-692c3",
+            storageBucket: "anonymous-messages-692c3.appspot.com",
+            messagingSenderId: "152307243781",
+            appId: "1:152307243781:web:f9e7787bcab188aefa756c"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var username = urlParams.get('user');
+       
+document.title = "DakBaksho : Send Anonymous Message to @" + username;
+ document.getElementById('usernameTitle').textContent = "@" + username;
+        document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
+
+        // Load user's profile image from Firestore
+        db.collection('users').doc(username).get().then((doc) => {
+            if (doc.exists) {
+                var userData = doc.data();
+                var profileImageURL = userData.profilePhotoURL;
+              document.getElementById('profileImage').src = userData.profilePhotoURL;
+
+document.getElementById('ogTitle').setAttribute('content', "Send Anonymous Message to @" + username);
+
+document.getElementById('ogDescription').setAttribute('content', "Send an anonymous message to @" + username + " on our platform!");
+
+document.getElementById('ogImage').setAttribute('content', profileImageURL);
+
+document.getElementById('ogUrl').setAttribute('content', window.location.href);
+
+                document.getElementById('twitterTitle').setAttribute('content', "Send Anonymous Message to @" + username);
+                document.getElementById('twitterDescription').setAttribute('content', "Send an anonymous message to @" + username + " on our platform!");
+                document.getElementById('twitterImage').setAttribute('content', profileImageURL);
+
+createOGImage(profileImageURL);
+            }
+        });
+
+        function sendMessage() {
+            var message = document.getElementById('messageInput').value.trim().replace(/\n/g, '\\n');
+    
+            if (message) {
+                db.collection('users').doc(username).collection('messages').add({
+                    content: message,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    alert("Message sent!");
+                    document.getElementById('messageInput').value = ''; // Clear input
+                });
+            } else {
+                alert("Message cannot be empty!");
+            }
+        }
+
+
+        function createOGImage(profileImageUrl) {
+            // Get the canvas element
+            var canvas = document.getElementById('ogCanvas');
+            var ctx = canvas.getContext('2d');
+
+            // Load the background and profile images
+            var background = new Image();
+            var profileImage = new Image();
+
+            background.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgE78vapcbDCVfkCwffpSyd5gKu9azA0KUUKiNbs-mw9ROYaP6LtEqjEXdlYOjZXchPM48aUM5-h0kklQrBwUm1oLi1FQjiiniCjPE0fgmzhjQQUbHGIe5HKpz0NrvWi9kh-kJ0YR5ff7J44skIyQEwjywthGBXIN6QcTI65n1zqBD2gwaVaB2sUnOkvN0/s888/AlbedoBase_XL_a_big_round_and_red_postbox_for_sending_messages_2.jpg';  // Path to your background image
+            profileImage.src = profileImageUrl;  // User's profile image URL
+
+            // When the background image loads, draw it on the canvas
+            background.onload = function() {
+                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);  // Draw background
+
+                // Once the background is drawn, load and draw the profile image
+                profileImage.onload = function() {
+                    // Set profile image size and position (adjust as needed)
+                    var profileSize = 200;
+                    var profileX = (canvas.width / 2) - (profileSize / 2);
+                    var profileY = (canvas.height / 2) - (profileSize / 2);
+
+                    // Draw the profile image in the center of the canvas
+                    ctx.drawImage(profileImage, profileX, profileY, profileSize, profileSize);
+
+                    // Convert the canvas to a data URL
+                    var ogImageUrl = canvas.toDataURL('image/jpeg');
+
+                    // Set the og:image dynamically
+                    document.getElementById('ogImage').setAttribute('content', ogImageUrl);
+
+                    console.log("OG Image URL:", ogImageUrl);  // For debugging
+                };
+            };
+        }
+
+    </script>
+
+</body>
+</html>
