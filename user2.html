@@ -1,194 +1,154 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Anonymous Message</title>
+    <title id="dynamicTitle">Send Anonymous Message</title>
     
-
-<!-- Social Media Meta Tags -->
-<meta property="og:title" id="ogTitle" content="Anonymous Message">
-<meta property="og:description" id="ogDescription" content="Send anonymous messages!">
-<meta property="og:image" id="ogImage" content="">
-<meta property="og:url" content="https://yourwebsite.com">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" id="twitterTitle" content="Anonymous Message">
-<meta name="twitter:description" id="twitterDescription" content="Send anonymous messages!">
-<meta name="twitter:image" id="twitterImage" content="">
+    <!-- Dynamic Meta Tags -->
+    <meta name="description" id="metaDescription" content="Send anonymous messages.">
+    <meta name="author" content="Antar Saha">
+    <meta name="website" content="https://dakbaksho.github.io">
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-
     <style>
      @import url('https://fonts.cdnfonts.com/css/avenir');
-       *{
-    box-sizing: border-box;
-}
+       * {
+           box-sizing: border-box;
+       }
 
-body {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
-    background-repeat: no-repeat;
-    font: 14px "Avenir Next", Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+       body {
+           display: flex;
+           justify-content: center;
+           height: 100vh;
+           background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
+           background-repeat: no-repeat;
+           font: 14px "Avenir Next", Helvetica, Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+       }
 
-.container {
-    background-color: transparent;
-    border-radius: 0px;
-    padding: 0px;
-  margin-top: 30px ! important;
-    width: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.msg-container {
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-   border-radius: 30px;
-      }
-      
-.heading {
-  background: white;
-  width:100%;
-  padding:25px 20px 5px 20px;
-  border-radius: 30px 30px 0px 0px;
-}
-.profile {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    background: white;
-}
+       .container {
+           background-color: transparent;
+           border-radius: 0px;
+           padding: 0px;
+           margin-top: 30px !important;
+           width: 350px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+       }
 
-.profile-img {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-  object-fit: cover;
-    margin-right: 10px;
-}
+       .msg-container {
+           box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+           border-radius: 30px;
+       }
 
-.profile-info {
-    display: flex;
-    flex-direction: column;
-}
+       .heading {
+           background: white;
+           width: 100%;
+           padding: 25px 20px 5px 20px;
+           border-radius: 30px 30px 0px 0px;
+       }
 
-#usernameTitle {
-    font-weight: normal;
-    font-size: 16px;
-}
+       .profile {
+           display: flex;
+           align-items: center;
+           margin-bottom: 15px;
+           background: white;
+       }
 
-#usernamebody {
-    font-size: 14px;
-    color: black;
-    font-weight: bold;
-}
-.msgbox {
-  border-radius: 0px 0px 30px 30px;
-  background-color:rgba(255,255,255,0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(6px);
-      }
-      
-.message-box {
-    width: 100%;
-    height:160px;
-    border-radius: 0px;
-    border: none;
-    background-color: transparent;
-    padding:18px 24px ! important;
-    margin-bottom:10px;
-    font-size: 20px;
-    font-weight: 600 ! important;
-    color: black;
-    outline: none;
-    resize: none;
-    box-sizing: border-box;
-}
+       .profile-img {
+           border-radius: 50%;
+           width: 70px;
+           height: 70px;
+           object-fit: cover;
+           margin-right: 10px;
+       }
 
-.message-box::placeholder {
-    color: rgba(0,0,0,0.32);
-    font-weight: 800 ! important;
-}
+       .profile-info {
+           display: flex;
+           flex-direction: column;
+       }
 
+       #usernameTitle {
+           font-weight: normal;
+           font-size: 16px;
+       }
 
-.anonymous-text {
-    font-size: 12px;
-    color: gray;
-}
+       #usernamebody {
+           font-size: 14px;
+           color: black;
+           font-weight: bold;
+       }
 
-.send-btn {
-    background-color: black;
-    color: white;
-    padding: 20px 10px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    width: 330px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-}
+       .msgbox {
+           border-radius: 0px 0px 30px 30px;
+           background-color: rgba(255, 255, 255, 0.4);
+           backdrop-filter: blur(24px);
+           -webkit-backdrop-filter: blur(6px);
+       }
 
-.send-btn:hover {
-    background-color: #333;
-}
+       .message-box {
+           width: 100%;
+           height: 160px;
+           border-radius: 0px;
+           border: none;
+           background-color: transparent;
+           padding: 18px 24px !important;
+           margin-bottom: 10px;
+           font-size: 20px;
+           font-weight: 600 !important;
+           color: black;
+           outline: none;
+           resize: none;
+           box-sizing: border-box;
+       }
 
-      
-        .blinking-textarea {
-            position: relative;
-            font-family: monospace;
-            padding: 10px;
-            font-size: 16px;
-            line-height: 1.5;
-        }
+       .message-box::placeholder {
+           color: rgba(0, 0, 0, 0.32);
+           font-weight: 800 !important;
+       }
 
-        /* Blinking caret effect */
-        .blinking-textarea::after {
-            content: '';
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            width: 2px;
-            height: 20px;
-            background-color: black;
-            animation: blink 1s step-end infinite;
-        }
-      
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-        }
+       .send-btn {
+           background-color: black;
+           color: white;
+           padding: 20px 10px;
+           border: none;
+           border-radius: 30px;
+           cursor: pointer;
+           font-size: 16px;
+           font-weight: bold;
+           width: 330px;
+           text-align: center;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+       }
+
+       .send-btn:hover {
+           background-color: #333;
+       }
+
     </style>
 </head>
 <body>
-<div class="container">
- <div class="msg-container">
-  <div class="heading">
-        <div class="profile">
-            <img id="profileImage" class="profile-img" alt="Profile Image">
-            <div class="profile-info">
-                <div id="usernameTitle">Name</div>
-                <div id="usernamebody">send anonymous messages!</div>
+    <div class="container">
+        <div class="msg-container">
+            <div class="heading">
+                <div class="profile">
+                    <img id="profileImage" class="profile-img" alt="Profile Image">
+                    <div class="profile-info">
+                        <div id="usernameTitle">Name</div>
+                        <div id="usernamebody">send anonymous messages!</div>
+                    </div>
+                </div>
             </div>
-        </div>
-  </div>
-  <div class="msgbox">
-        <textarea id="messageInput" class="message-box blinking-textarea" placeholder="Leave an anonymous message..."></textarea>
-  </div>
- </div><br><br>
+            <div class="msgbox">
+                <textarea id="messageInput" class="message-box" placeholder="Leave an anonymous message..."></textarea>
+            </div>
+        </div><br><br>
         <button onclick="sendMessage()" class="send-btn">Send!</button>
     </div>
 
@@ -208,27 +168,22 @@ body {
 
         var urlParams = new URLSearchParams(window.location.search);
         var username = urlParams.get('user');
-document.getElementById('usernameTitle').textContent = "@" + username;
-document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
+        
+        // Update username in title and message body
+        document.getElementById('usernameTitle').textContent = "@" + username;
+        document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
 
-// Update meta tags with username
-document.getElementById('ogTitle').content = "Send Anonymous Message to @" + username;
-document.getElementById('ogDescription').content = "Leave a message for @" + username;
-document.getElementById('twitterTitle').content = "Send Anonymous Message to @" + username;
-document.getElementById('twitterDescription').content = "Leave a message for @" + username;
+        // Update title and meta description dynamically
+        document.title = "DakBaksho : Send " + username + " anonymous messages";
+        document.getElementById('metaDescription').setAttribute("content", "Send anonymous messages to " + username + " on DakBaksho.");
 
-// Load user's profile image from Firestore
-db.collection('users').doc(username).get().then((doc) => {
-    if (doc.exists) {
-        var userData = doc.data();
-        document.getElementById('profileImage').src = userData.profilePhotoURL;
-
-        // Update the og:image and twitter:image with the user's profile image URL
-        document.getElementById('ogImage').content = userData.profilePhotoURL;
-        document.getElementById('twitterImage').content = userData.profilePhotoURL;
-    }
-});
-
+        // Load user's profile image from Firestore
+        db.collection('users').doc(username).get().then((doc) => {
+            if (doc.exists) {
+                var userData = doc.data();
+                document.getElementById('profileImage').src = userData.profilePhotoURL;
+            }
+        });
 
         function sendMessage() {
             var message = document.getElementById('messageInput').value.trim().replace(/\n/g, '\\n');
