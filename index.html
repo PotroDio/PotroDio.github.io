@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Anonymous Message Sender | DakBaksho</title>
+<meta name="title" content="Anonymous Message Sender | DakBaksho">
+<meta name="description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dakbaksho.github.io/">
+<meta property="og:title" content="Anonymous Message Sender | DakBaksho">
+<meta property="og:description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
+<meta property="og:image" content="https://dakbaksho.github.io/images/metaimage.jpg">
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://dakbaksho.github.io/">
+<meta property="twitter:title" content="Anonymous Message Sender | DakBaksho">
+<meta property="twitter:description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
+<meta property="twitter:image" content="https://dakbaksho.github.io/images/metaimage.jpg">
+
+<meta name="author" content="Antar Saha">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="anonymous message sender, fun apps, dakbaksho, message friends anonymously, message apps, fun social tools, antar saha">
+<meta name="theme-color" content="#FFFFFF">
+
+<link rel="canonical" href="https://dakbaksho.github.io/">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+@import url(https://fonts.googleapis.com/css?family=Carattere);
+        html, body {
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+ background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
+        }
+
+        .background-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            animation: move 12s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle-2 {
+            width: 250px;
+            height: 250px;
+            bottom: -30px;
+            right: -30px;
+            animation-duration: 8s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(20px) translateX(20px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+            padding: 0px;
+            position: relative;
+        }
+
+        .logo {
+            animation: fade-in 2s ease-in-out;
+        }
+
+        .logo img {
+            width: 180px;
+            height: auto;
+            border-radius:50%;
+            margin-bottom: 20px;
+            animation: zoom-in 1.5s ease-in-out forwards;
+        }
+
+        h1 {
+            font-family:Carattere;
+            font-size: 3rem;
+            animation: fade-in 2s ease-in-out 0.5s forwards;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            animation: slide-in 1.5s ease-out forwards;
+        }
+
+        .start-button {
+            margin-top: 40px;
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 1rem;
+            background: linear-gradient(90deg, #ff7675, #ff6b6b);
+            color: white;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            text-align: center;
+        }
+
+        .start-button:hover {
+            color: #ffffff;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes zoom-in {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-circle circle-1"></div>
+    <div class="background-circle circle-2"></div>
+
+    <div class="container">
+        <div class="logo">
+            <img src="https://dakbaksho.github.io/files/log.jpg" alt="DakBaksho Logo">
+        </div>
+        <h1>DakBaksho</h1>
+        <p class="tagline">Send messages anonymously</p>
+
+        <a href="./signup.html" class="start-button">Start Getting Messages</a>
+    </div>
+
+</body>
+</html>
