@@ -11,6 +11,7 @@
     <style>
         body {            
           display: flex;
+          flex-direction: row;
           align-items: center;
           justify-content: center;
           height: 100%;
@@ -45,7 +46,7 @@
                         // User not found, show error
                         document.body.innerHTML = `
                             <h1>Error: User not found</h1>
-                            <p>The user you're looking for doesn't exist. <a href="/index.html">Go back to the homepage</a>.</p>`;
+                            <p>The user you're looking for doesn't exist.<br><a href="https://dakbaksho.github.io/" style="text-decoration: none;">Go back to the homepage</a></p>`;
                    ;
                     }
                 }).catch((error) => {
