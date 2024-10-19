@@ -1,0 +1,662 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<title>Sign Up | DakBaksho - Anonymous Message Sender</title>
+<meta name="title" content="Sign Up | DakBaksho - Anonymous Message Sender">
+<meta name="description" content="Create an account on DakBaksho and start sending anonymous messages to your friends. Join the fun!">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dakbaksho.github.io/signup">
+<meta property="og:title" content="Sign Up | DakBaksho - Anonymous Message Sender">
+<meta property="og:description" content="Create an account on DakBaksho and start sending anonymous messages to your friends. Join the fun!">
+<meta property="og:image" content="https://dakbaksho.github.io/files/metaimage.jpg">
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://dakbaksho.github.io/signup">
+<meta property="twitter:title" content="Sign Up | DakBaksho - Anonymous Message Sender">
+<meta property="twitter:description" content="Create an account on DakBaksho and start sending anonymous messages to your friends. Join the fun!">
+<meta property="twitter:image" content="https://dakbaksho.github.io/files/metaimage.jpg">
+
+<meta name="author" content="Antar Saha">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="signup, dakbaksho, anonymous message sender, create account, fun apps, antar saha">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://dakbaksho.github.io/signup">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+    <script src="https://unpkg.com/cropperjs"></script>
+
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Carattere);
+      @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+      @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
+      body{
+ background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
+ background-repeat: no-repeat;
+ font-size: 14px;
+ margin: 0;
+ padding: 0;
+      }
+        .signupbody{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ height: 100vh;
+}
+
+
+        .container {
+          display: block;
+            background-color: #FFFFFF29;
+            padding: 20px 0px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            max-width: auto;
+            position: relative;
+        }
+
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100px;
+            border-radius: 50%;
+        }
+
+        .warning {
+          color: white;
+          display: none;
+          font-size:12px;
+          text-align: left;
+          margin: 8px 0px 0px 42px;
+        }
+
+        .modal, .signup-info-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+   transform: translate(-50%, -50%);
+   background: white;
+   padding: 20px;
+   border-radius: 8px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+text-align: center;
+        }
+      .signup-info-modal {
+        width: 300px;
+        padding: 40px 20px;
+      }
+
+        .modal.active,
+        .signup-info-modal.active {
+            display: block;
+        }
+
+        .cropper-container {
+          width: 300px;
+            max-width: 100%;
+            max-height: 600px;
+            margin-bottom: 20px;
+        }
+
+        #croppedImage {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 10px;
+          border: 3px solid white;
+        }
+
+        .signup-info-modal p {
+          font-size: 16px;
+          margin-bottom: 10px;
+          text-align: left;
+        }
+      .modal.active {
+       display: block;
+       }
+      
+      
+      .signupbox .loghead{
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+        font-family: "Spicy Rice", serif;
+        font-size: 50px;
+        font-weight: 200;
+        line-height:0.6;
+      }
+      
+      .signupbox input[type="text"],
+      .signupbox input[type="password"],
+      .signupbox input[type="email"],
+      .signupbox input[type="file"] {
+            width: 230px;
+            padding: 14px 16px;
+            border: 2px solid white;
+            border-radius: 3px;
+            font-size: 16px;
+          background: #DFF1FF;
+        color: black;
+        font-weight: bold;
+        font-family:Lato,sans-serif;
+        }
+        .signupbox .sign {
+            width:265px;
+            background-color: #E98E15;
+            color: #fff;
+            border: none;
+            padding: 14px 0px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .signupbox .sign:hover {
+            background-color: orange;
+        }
+  .signupbox .loginname,
+  .signupbox .pass,
+  .signupbox .mail,
+  .signupbox .pic {
+    color: white;
+    margin: 14px 0px 6px 42px;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: left;
+      }
+  .passblock {
+   display:inline-block;
+   font-weight: Normal;
+   font-size: 12px;
+   text-transform: lowercase;
+     } 
+  .signupbox .signuplink {
+    max-width: fit-content;
+    display: block;
+    padding-top: 20px;
+    margin: auto;
+    color: white;
+  font-family:Lato,sans-serif;
+    }
+
+  .signupbox .signuplink a { 
+    color: #E98E15;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+      }
+      
+/* Header and Navbar Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    font-family: Carattere;
+    letter-spacing: 1.5px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-left: 1.5rem;
+}
+
+.navbar ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #007bff;
+}
+
+/* Mobile Menu Icon */
+.menu-icon {
+    display: none;
+    cursor: pointer;
+}
+
+.menu-icon div {
+    width: 30px;
+    height: 3.5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Menu Icon Animation */
+.menu-icon.change .bar1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+}
+
+.menu-icon.change .bar2 {
+    opacity: 0;
+}
+
+.menu-icon.change .bar3 {
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar ul {
+        display: none;
+        flex-direction: column;
+        background-color: #fff;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar ul li {
+        text-align: center;
+        margin: 1rem 0;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .navbar ul.active {
+        display: flex;
+    }
+}
+
+      .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin:0px 42px;
+}
+
+.password-wrapper input {
+    flex: 1;
+}
+
+.password-wrapper button {
+    position: absolute;
+    right: 6px;
+    background: none;
+    border: none;
+    color: #007BFF;
+    cursor: pointer;
+    font-size: 14px;
+}
+    </style>
+</head>
+<body>
+  <div class="header">
+    <a style="text-decoration: none;" href="https://dakbaksho.github.io">
+        <div class="logo">DakBaksho</div>
+    </a>
+    <nav class="navbar">
+        <ul>
+            <li><a href="https://dakbaksho.github.io/dashboard">About</a></li>
+            <li><a href="https://dakbaksho.github.io/login">Login</a></li>
+            <li><a href="https://dakbaksho.github.io/signup">Signup</a></li>
+        </ul>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </nav>
+</div>
+<div class="signupbody">
+    <div class="signupbox">
+    <div class="container">
+        <div class="image-container">
+            <img id="croppedImage" src="https://dakbaksho.github.io/files/log.jpg" alt="Signup Image">
+        </div>
+
+        <h1 class="loghead">Signup</h1>
+
+  <div class="loginname">Username
+<div class="passblock">(3-10 Character)</div></div>
+        <input type="text" maxlength="10" id="username" placeholder="Enter a username" required oninput="validateUsernameInput()">
+        <div id="usernameWarning" class="warning">Username only accepted [ a-z ], [ 0-9 ], [ _ ]</div>
+
+<div class="mail">Email </div>
+<input type="email" id="email" placeholder="Enter your email" required oninput="validateEmailInput()">
+<div id="emailWarning" class="warning">Please enter a valid email address.</div>
+
+
+  <div class="pass">Password 
+<div class="passblock">(Minimum 6 Character)</div></div>
+   <div class="password-wrapper">
+    <input type="password" id="password" placeholder="Enter your password" required oninput="validatePasswordInput()">
+    <button type="button" id="togglePassword" onclick="togglePasswordVisibility()">
+      <i class="fa fa-eye-slash" id="toggleIcon"></i>
+     </button>
+   </div> 
+  <div id="passwordWarning" class="warning">Password must be greater than 6 characters.</div>
+      
+  <div class="pic">Profile Photo </div>
+        <input type="file" id="profilePhoto" accept="image/*" required onchange="handleImageUpload(event)">
+        <div id="photoWarning" class="warning">Please upload a profile photo.</div>
+
+        <button class="sign" onclick="signup()">Signup</button>
+  <div class="signuplink">Already have a account? <a href="/login.html">Login</a> Now</div>
+    </div>
+</div>
+  <div id="loading" class="loading" style="display: none;"><div style="text-align: center;">Please Wait...<br>We're processing image for profile.</div></div>
+    
+    <!-- Modal for cropping -->
+    <div class="modal" id="cropModal">
+    <h2>Crop your image</h2>
+    <div class="cropper-container">
+        <img id="imageToCrop" alt="Image to Crop">
+    </div>
+    <button onclick="cancelCrop()">Cancel</button>
+    <button onclick="cropImage()">Crop & Save</button>
+</div>
+  
+<div class="modal" id="loadingModal">
+    <h2>Loading...</h2>
+    <p>Please wait while we create your account.</p>
+</div>
+
+    <!-- Modal for signup information -->
+    <div class="signup-info-modal" id="signupInfoModal">
+        <h2>Signup Successful</h2>
+        <p><strong>Username:</strong> <span id="modalUsername"></span></p>
+        <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+        <p><strong>Password:</strong> <span id="modalPassword"></span></p><br>
+        <div style="width:100%; text-align: center;">Reserve your USERNAME and PASSWORD carefully.</div><br>
+        <button onclick="redirectToLogin()">Go to Login</button>
+    </div>
+</div>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
+            authDomain: "anonymous-messages-692c3.firebaseapp.com",
+            projectId: "anonymous-messages-692c3",
+            storageBucket: "anonymous-messages-692c3.appspot.com",
+            messagingSenderId: "152307243781",
+            appId: "1:152307243781:web:f9e7787bcab188aefa756c"
+        };
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+        var storage = firebase.storage();
+        var cropper;
+        var croppedImageDataURL;
+
+        window.onload = function() {
+            var storedUsername = localStorage.getItem('username');
+            if (storedUsername) {
+        window.location.href = "/dashboard.html";
+            }
+        };
+
+        function validateUsername(username) {
+            var regex = /^[a-zA-Z0-9_]+$/;
+            return regex.test(username) && username.length >= 3 && username.length <= 10;
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function validateUsernameInput() {
+            var username = document.getElementById('username').value.trim();
+            var usernameWarning = document.getElementById('usernameWarning');
+            if (!validateUsername(username)) {
+                usernameWarning.style.display = 'block';
+            } else {
+                usernameWarning.style.display = 'none';
+            }
+        }
+
+        function validatePasswordInput() {
+            var password = document.getElementById('password').value.trim();
+            var passwordWarning = document.getElementById('passwordWarning');
+            if (!validatePassword(password)) {
+                passwordWarning.style.display = 'block';
+            } else {
+                passwordWarning.style.display = 'none';
+            }
+        }
+      
+function togglePasswordVisibility() {
+    var passwordField = document.getElementById('password');
+    var toggleIcon = document.getElementById('toggleIcon');
+
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    }
+}
+
+      function validateEmail(email) {
+    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function validateEmailInput() {
+    var email = document.getElementById('email').value.trim();
+    var emailWarning = document.getElementById('emailWarning');
+    
+    if (!validateEmail(email)) {
+        emailWarning.style.display = 'block';
+    } else {
+        emailWarning.style.display = 'none';
+    }
+}
+
+      document.getElementById('profilePhoto').addEventListener('change', function () {
+    const loadingDiv = document.getElementById('loading');
+    loadingDiv.style.display = 'flex';
+    setTimeout(() => {
+        loadingDiv.style.display = 'none';
+    }, 3000);
+});
+
+        function handleImageUpload(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var imageElement = document.getElementById('imageToCrop');
+                    imageElement.src = e.target.result;
+                    document.getElementById('cropModal').classList.add('active');
+                    cropper = new Cropper(imageElement, {
+                        aspectRatio: 1,
+                        viewMode: 1
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function cropImage() {
+            var canvas = cropper.getCroppedCanvas({
+                width: 500,
+                height: 500,
+            });
+            croppedImageDataURL = canvas.toDataURL('image/png');
+            document.getElementById('croppedImage').src = croppedImageDataURL;
+            document.getElementById('cropModal').classList.remove('active');
+        }
+      
+      function cancelCrop() {document.getElementById('cropModal').classList.remove('active');
+    cropper.destroy(); 
+}
+
+function signup() {
+document.getElementById('loadingModal').classList.add('active');
+
+    var username = document.getElementById('username').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value.trim();
+    var profilePhoto = document.getElementById('profilePhoto').files[0];
+
+    var usernameWarning = document.getElementById('usernameWarning');
+    var passwordWarning = document.getElementById('passwordWarning');
+    var emailWarning = document.getElementById('emailWarning');
+    var photoWarning = document.getElementById('photoWarning');
+
+    var isUsernameValid = validateUsername(username);
+    var isPasswordValid = validatePassword(password);
+    var isEmailValid = validateEmail(email);
+    var isPhotoCropped = !!croppedImageDataURL;
+
+    usernameWarning.style.display = isUsernameValid ? 'none' : 'block';
+    passwordWarning.style.display = isPasswordValid ? 'none' : 'block';
+    emailWarning.style.display = isEmailValid ? 'none' : 'block';
+    photoWarning.style.display = isPhotoCropped ? 'none' : 'block';
+
+    if (!isUsernameValid || !isPasswordValid || !isEmailValid || !isPhotoCropped) {
+document.getElementById('loadingModal').classList.remove('active');
+        return;
+    }
+
+    var userRef = db.collection('users').doc(username);
+    userRef.get().then((doc) => {
+        if (doc.exists) {
+            alert('Username already taken!');
+            document.getElementById('loadingModal').classList.remove('active');
+        } else {
+            fetch(croppedImageDataURL)
+                .then(res => res.blob())
+                .then(blob => {
+                    var storageRef = storage.ref('profilePhotos/' + username + '.png');
+                    var uploadTask = storageRef.put(blob);
+                    uploadTask.on('state_changed', 
+                        function(snapshot) {}, 
+                        function(error) {
+                            alert('Error uploading image: ' + error.message);
+                            document.getElementById('loadingModal').classList.remove('active');
+                        }, 
+                        function() {
+                            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                                userRef.set({
+                                    username: username,
+                                    email: email,
+                                    password: password,
+                                    profilePhotoURL: downloadURL
+                                }).then(() => {
+document.getElementById('loadingModal').classList.remove('active');
+                                    displaySignupInfoModal(username, email, password);
+                                }).catch((error) => {
+                                    alert('Error saving user data: ' + error.message);
+                                    document.getElementById('loadingModal').classList.remove('active');
+                                });
+                            });
+                        }
+                    );
+                });
+        }
+    }).catch((error) => {
+        alert('Error checking username: ' + error.message);
+        document.getElementById('loadingModal').classList.remove('active');
+    });
+}
+
+        function displaySignupInfoModal(username, email, password) {
+            document.getElementById('modalUsername').textContent = username;
+            document.getElementById('modalEmail').textContent = email;
+            document.getElementById('modalPassword').textContent = password;
+
+            document.getElementById('signupInfoModal').classList.add('active');
+        }
+
+        function redirectToLogin() {
+            window.location.href = '/login.html';
+        }
+                function toggleMenu() {
+        const navbar = document.querySelector('.navbar ul');
+        const menuIcon = document.querySelector('.menu-icon');
+        navbar.classList.toggle('active');
+        menuIcon.classList.toggle('change');
+    }
+
+    document.addEventListener('click', function(event) {
+        const navbar = document.querySelector('.navbar ul');
+        const menuIcon = document.querySelector('.menu-icon');
+        const isClickInsideNavbar = navbar.contains(event.target);
+        const isClickInsideMenuIcon = menuIcon.contains(event.target);
+
+        if (!isClickInsideNavbar && !isClickInsideMenuIcon) {
+            navbar.classList.remove('active');
+            menuIcon.classList.remove('change');
+        }
+    });
+
+    </script>
+</body>
+</html>
