@@ -31,22 +31,21 @@
 
     <style>
       @import url(https://fonts.googleapis.com/css?family=Carattere);
- 
       @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
       @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
       
-        body {
-     font-family: Arial, sans-serif;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     height: 100vh;
-     margin: 0px;
-     padding: 0px;
-     box-sizing: border-box;
-     overflow: scroll;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+      body {
     background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
         }
 
 
@@ -63,10 +62,11 @@
 
       .login {
  background-color: #FFFFFF29;
- padding: 40px 40px;
+ padding: 40px;
+margin: 40px auto;
  border-radius: 10px;
  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
- max-width: auto;
+ max-width: 280px;
  position: relative;
  font-family:Lato,sans-serif;
         }
@@ -80,8 +80,8 @@
         margin: 20px 0px;
       }
       
-      .login input[type="text"],
-      .login input[type="password"] {
+      #loginUsername,
+       #loginPassword {
             width: 230px;
             padding: 14px 16px;
             border: 2px solid white;
@@ -135,7 +135,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: auto;
+    width: 265px;
 }
 
 .password-wrapper input {
@@ -164,7 +164,6 @@
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .logo {
     font-size: 2rem;
     font-weight: 700;
@@ -255,7 +254,6 @@
   </style>
 </head>
 <body>
-  <div style="position: fixed; top:0; background: white;z-index: 99;width: 100%;">
 <div class="header">
     <a style="text-decoration: none;" href="https://dakbaksho.github.io">
         <div class="logo">DakBaksho</div>
@@ -273,9 +271,10 @@
         </div>
     </nav>
 </div>
-    </div>
-
-
+<div style="
+     display: flex;
+     align-items: center;
+     justify-content: center;">
 <div class="login">
          <div class="image-container">
             <img src="https://dakbaksho.github.io/files/log.jpg" alt="Dakbaksho Logo">
@@ -297,6 +296,7 @@
         <br><br>
         <button class="loginbutton" onclick="login()">Login</button>
   <div class="signuplink">New to DakBaksho? <a href="/signup.html">Sign Up</a> Now</div>
+</div>
 </div>
          <script>
         // Initialize Firebase with your configuration
