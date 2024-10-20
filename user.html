@@ -28,7 +28,11 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
- 
+ <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
@@ -45,16 +49,22 @@ body {
     height: 100vh;
     background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     font: 14px "Avenir Next", Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
-
+body::-webkit-scrollbar {
+    display: none;
+}
 .container {
     background-color: transparent;
     border-radius: 0px;
     padding: 0px;
-  margin-top: 30px ! important;
+  margin-top: 50px ! important;
     width: 350px;
     display: flex;
     flex-direction: column;
@@ -142,10 +152,11 @@ body {
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     width: 330px;
     text-align: center;
+    cursor: pointer;
     box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 }
 
@@ -153,35 +164,96 @@ body {
     background-color: #333;
 }
 
-      
-        .blinking-textarea {
-            position: relative;
-            font-family: monospace;
-            padding: 10px;
-            font-size: 16px;
-            line-height: 1.5;
-        }
+.get-btn {
+    background-color: black;
+    color: white;
+    padding: 20px 14px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    width: 340px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+animation: heartbeat 1.5s ease-in-out infinite both;
+border: 1px solid white;
+}
 
-        /* Blinking caret effect */
-        .blinking-textarea::after {
-            content: '';
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            width: 2px;
-            height: 20px;
-            background-color: black;
-            animation: blink 1s step-end infinite;
-        }
-      
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-        }
+.get-btn:hover {
+    background-color: #EC1187;
+}
+
+@-webkit-keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+@keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -197,14 +269,17 @@ body {
         </div>
   </div>
   <div class="msgbox">
-        <textarea id="messageInput" class="message-box blinking-textarea" placeholder="Leave an anonymous message..."></textarea>
+        <textarea id="messageInput" class="message-box" placeholder="Leave an anonymous message..."></textarea>
   </div>
  </div><br><br>
         <button onclick="sendMessage()" class="send-btn">Send!</button>
+
+<div style="color: white; margin-top: 120px; margin-bottom: 15px; font-weight: bold; font-size: 20px;">Wanna get anonymous message??</div>
+
+        <button onclick="getMessage()" class="get-btn">Click Me!</button>
     </div>
 
     <script>
-        // Initialize Firebase with your configuration
         var firebaseConfig = {
             apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
             authDomain: "anonymous-messages-692c3.firebaseapp.com",
@@ -244,6 +319,10 @@ body {
             } else {
                 alert("Message cannot be empty!");
             }
+        }
+
+        function getMessage() {
+        window.location.href = "/signup.html";
         }
     </script>
 
