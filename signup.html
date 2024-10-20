@@ -51,6 +51,11 @@ html, body {
  background-size: cover;
  background-attachment: fixed;
  font-size: 14px;
+ -ms-overflow-style: none;
+ scrollbar-width: none;
+      }
+     html::-webkit-scrollbar {
+    display: none;
       }
         .signupbody {
  display: flex;
@@ -461,7 +466,7 @@ html, body {
         window.onload = function() {
             var storedUsername = localStorage.getItem('username');
             if (storedUsername) {
-        window.location.hrefz = "/dashboard.html";
+        window.location.href = "/dashboard.html";
             }
         };
 
