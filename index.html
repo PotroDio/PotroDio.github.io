@@ -39,9 +39,16 @@ body {
     height: 100vh;
     background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     color: white;
     margin: 0;
     padding: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+        body::-webkit-scrollbar {
+    display: none;
 }
 
         .background-circle {
@@ -116,6 +123,7 @@ body {
             display: block;
             padding: 10px 25px;
             font-size: 1rem;
+            font-weight: 800;
             background: linear-gradient(90deg, #ff7675, #ff6b6b);
             color: white;
             border-radius: 50px;
