@@ -64,7 +64,8 @@ html, body {
         }
 
         .image-container img {
-            max-width: 100px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 3px solid white;
         }
@@ -89,7 +90,7 @@ margin: 40px auto;
         margin: 20px 0px;
       }
       
-      #loginUsername,
+      #loginEmail,
        #loginPassword {
             width: 230px;
             padding: 14px 16px;
@@ -290,8 +291,8 @@ margin: 40px auto;
         </div>
 
         <h1 class="loghead">LogIn</h1>
-  <div class="loginname">Username:</div>
-        <input type="text" id="loginUsername" placeholder="Enter your Username" required>
+  <div class="loginname">Email:</div>
+<input type="email" id="loginEmail" placeholder="Enter your email" required>
         <br><br>
   <div class="pass">Password:</div>
 
@@ -301,14 +302,13 @@ margin: 40px auto;
       <i class="fa fa-eye-slash" id="toggleIcon"></i>
      </button>
    </div> 
+  <a style="display: block; color: #E98E15; font-weight : bold; text-decoration: none; margin:10px 2px;text-align: right;" href="/recover.html">Forget Password?</a> 
 
-        <br><br>
         <button class="loginbutton" onclick="login()">Login</button>
   <div class="signuplink">New to DakBaksho? <a href="/signup.html">Sign Up</a> Now</div>
 </div>
 </div>
          <script>
-        // Initialize Firebase with your configuration
         var firebaseConfig = {
             apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
             authDomain: "anonymous-messages-692c3.firebaseapp.com",
@@ -329,22 +329,31 @@ margin: 40px auto;
         };
 
         function login() {
-            var username = document.getElementById('loginUsername').value.trim();
-            var password = document.getElementById('loginPassword').value.trim();
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value.trim();
 
-            if (username && password) {
-                db.collection('users').doc(username).get().then((doc) => {
-                    if (doc.exists && doc.data().password === password) {
+    if (email && password) {
+        db.collection('users').where("email", "==", email).get().then((querySnapshot) => {
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().password === password) {
+                        var username = doc.data().username;
                         localStorage.setItem('username', username);
                         window.location.href = "/dashboard.html";
                     } else {
-                        alert("Incorrect username or password.");
+                        alert("Incorrect email or password.");
                     }
                 });
             } else {
-                alert("Please enter valid username and password.");
+                alert("No account found with this email.");
             }
-        }
+        }).catch((error) => {
+            console.error("Error logging in: ", error);
+        });
+    } else {
+        alert("Please enter a valid email and password.");
+    }
+}
 
            function togglePasswordVisibility() {
     var passwordField = document.getElementById('loginPassword');
