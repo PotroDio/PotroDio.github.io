@@ -39,6 +39,7 @@
 
     <style>
      @import url('https://fonts.cdnfonts.com/css/avenir');
+      @import url(https://fonts.googleapis.com/css?family=Carattere);
        *{
     box-sizing: border-box;
 }
@@ -64,12 +65,20 @@ body::-webkit-scrollbar {
     background-color: transparent;
     border-radius: 0px;
     padding: 0px;
-  margin-top: 50px ! important;
     width: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+.logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    font-family: Carattere;
+    letter-spacing: 1.5px;
+margin: 36px 0 14px 0;
+}
+
 .msg-container {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
    border-radius: 30px;
@@ -161,7 +170,7 @@ body::-webkit-scrollbar {
 }
 
 .send-btn:hover {
-    background-color: #333;
+    background-color: #000756;
 }
 
 .get-btn {
@@ -257,6 +266,7 @@ animation: heartbeat 1.5s ease-in-out infinite both;
 </head>
 <body>
 <div class="container">
+<div class="logo">DakBaksho</div>
  <div class="msg-container">
   <div class="heading">
         <div class="profile">
@@ -268,12 +278,13 @@ animation: heartbeat 1.5s ease-in-out infinite both;
         </div>
   </div>
   <div class="msgbox">
-        <textarea id="messageInput" class="message-box" placeholder="Leave an anonymous message..."></textarea>
+        <textarea id="messageInput" class="message-box" placeholder="Leave an anonymous message..." maxlength="250"></textarea>
   </div>
- </div><br><br>
+ </div>
+        <div id="charCount" style="color: white; font-size: 12px; display: none;text-align: center; margin-top:10px;">You have reached the maximum character limit!</div><br><br>
         <button onclick="sendMessage()" class="send-btn">Send!</button>
 
-<div style="color: white; margin-top: 120px; margin-bottom: 15px; font-weight: bold; font-size: 20px;">Wanna get anonymous message without Facebook or Instagram??</div>
+<div style="color: white; margin-top: 120px; margin-bottom: 15px; font-weight: bold; font-size: 18px; text-align: center;">Wanna get anonymous message without Facebook or Instagram?</div>
 
         <button onclick="getMessage()" class="get-btn">Click Me!</button>
     </div>
@@ -293,27 +304,36 @@ animation: heartbeat 1.5s ease-in-out infinite both;
 
         var urlParams = new URLSearchParams(window.location.search);
         var username = urlParams.get('user');
-       document.getElementById('usernameTitle').textContent = "@" + username;
+        document.getElementById('usernameTitle').textContent = "@" + username;
         document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
-
-        // Load user's profile image from Firestore
-        db.collection('users').doc(username).get().then((doc) => {
+db.collection('users').doc(username).get().then((doc) => {
             if (doc.exists) {
                 var userData = doc.data();
                 document.getElementById('profileImage').src = userData.profilePhotoURL;
             }
         });
 
+        var messageInput = document.getElementById('messageInput');
+        var charCount = document.getElementById('charCount');
+
+        messageInput.addEventListener('input', function() {
+            if (messageInput.value.length >= 250) {
+                charCount.style.display = 'block';
+            } else {
+                charCount.style.display = 'none';
+            }
+        });
+
         function sendMessage() {
-            var message = document.getElementById('messageInput').value.trim().replace(/\n/g, '\\n');
+            var message = messageInput.value.trim().replace(/\n/g, '\\n');
     
-            if (message) {
-                db.collection('users').doc(username).collection('messages').add({
+            if (message) {db.collection('users').doc(username).collection('messages').add({
                     content: message,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
                     alert("Message sent!");
-                    document.getElementById('messageInput').value = ''; // Clear input
+                    messageInput.value = '';
+                    charCount.style.display = 'none';
                 });
             } else {
                 alert("Message cannot be empty!");
@@ -321,9 +341,9 @@ animation: heartbeat 1.5s ease-in-out infinite both;
         }
 
         function getMessage() {
-        window.location.href = "/signup.html";
+            window.location.href = "/signup.html";
         }
     </script>
-
 </body>
+
 </html>
