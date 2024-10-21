@@ -670,13 +670,13 @@ document.querySelector('.totalmsg').style.display = 'block';
           }
 
 async function shareOnInsta() {
-    const imageUrl = "https://dakbaksho.github.io/files/metaimage.jpg";
+    const imageUrl = "https://dakbaksho.github.io/files/instaimage.jpg";
     const response = await fetch(imageUrl);
     const blob = await response.blob();
-    const file = new File([blob], "DakBaksho.jpg", { type: "image/jpeg" });
+    const file = new File([blob], "instaimage.jpg", { type: "image/jpeg" });
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(file);
-    downloadLink.download = "metaimage.jpg";
+    downloadLink.download = "instaimage.jpg";
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
