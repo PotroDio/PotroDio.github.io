@@ -377,9 +377,9 @@ html, body {
     </a>
     <nav class="navbar">
         <ul>
-            <li><a href="https://dakbaksho.github.io/dashboard">About</a></li>
+            <li><a href="https://dakbaksho.github.io/">Home</a></li>
             <li><a href="https://dakbaksho.github.io/login">Login</a></li>
-            <li><a href="https://dakbaksho.github.io/signup">Signup</a></li>
+            <li><a href="https://antarweb.github.io/contact">Contact</a></li>
         </ul>
         <div class="menu-icon" onclick="toggleMenu()">
             <div class="bar1"></div>
@@ -401,6 +401,7 @@ html, body {
 <div class="passblock">(3-10 Character)</div></div>
         <input type="text" maxlength="10" id="username" placeholder="Enter a username" required oninput="validateUsernameInput()">
         <div id="usernameWarning" class="warning">Username only accepted [ a-z ], [ 0-9 ], [ _ ]</div>
+<div id="usernameAvailabilityMessage" class="warning" style="display: none;"></div>
 
 <div class="mail">Email </div>
 <input type="email" id="email" placeholder="Enter your email" required oninput="validateEmailInput()">
@@ -483,15 +484,37 @@ html, body {
             return password.length >= 6;
         }
 
-        function validateUsernameInput() {
-            var username = document.getElementById('username').value.trim();
-            var usernameWarning = document.getElementById('usernameWarning');
-            if (!validateUsername(username)) {
-                usernameWarning.style.display = 'block';
-            } else {
-                usernameWarning.style.display = 'none';
-            }
+ document.getElementById('username').addEventListener('input', checkUsernameAvailability);
+
+function checkUsernameAvailability() {
+    var username = document.getElementById('username').value.trim();
+    var usernameWarning = document.getElementById('usernameWarning');
+    var availabilityMessage = document.getElementById('usernameAvailabilityMessage');
+
+    if (!validateUsername(username)) {
+        usernameWarning.style.display = 'block';
+        availabilityMessage.style.display = 'none';
+        return;
+    } else {
+        usernameWarning.style.display = 'none';
+    }
+
+    var userRef = db.collection('users').doc(username);
+
+    userRef.get().then((doc) => {
+        if (doc.exists) {
+            availabilityMessage.textContent = `Username "${username}" is not available`;
+            availabilityMessage.style.color = 'red';
+            availabilityMessage.style.display = 'block';
+        } else {
+            availabilityMessage.textContent = `Username "${username}" is available`;
+            availabilityMessage.style.color = 'white';
+            availabilityMessage.style.display = 'block';
         }
+    }).catch((error) => {
+        console.error('Error checking username availability: ', error);
+    });
+}
 
         function validatePasswordInput() {
             var password = document.getElementById('password').value.trim();
@@ -676,3 +699,4 @@ document.getElementById('loadingModal').classList.remove('active');
     </script>
 </body>
 </html>
+ 
