@@ -586,7 +586,8 @@ box-shadow:0 0 0 2px #25D366;
 
         <div id="messagesContainer"></div>
 
-<div id="instaShareModal" class="instamodal" style="display:none;">
+
+ <div id="instaShareModal" class="instamodal" style="display:none;">
     <div class="instamodal-content">
         <span class="close" onclick="closeInstaShareModal()">&times;</span><br>
         <h2>How to Share on Instagram</h2>
@@ -611,228 +612,244 @@ box-shadow:0 0 0 2px #25D366;
 </div><br>
 </div>
     </div>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
-            authDomain: "anonymous-messages-692c3.firebaseapp.com",
-            projectId: "anonymous-messages-692c3",
-            storageBucket: "anonymous-messages-692c3.appspot.com",
-            messagingSenderId: "152307243781",
-            appId: "1:152307243781:web:f9e7787bcab188aefa756c"
-        };
+ <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
+        authDomain: "anonymous-messages-692c3.firebaseapp.com",
+        projectId: "anonymous-messages-692c3",
+        storageBucket: "anonymous-messages-692c3.appspot.com",
+        messagingSenderId: "152307243781",
+        appId: "1:152307243781:web:f9e7787bcab188aefa756c"
+    };
 
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
 
-        window.onload = function() {
-            var storedUsername = localStorage.getItem('username');
-            if (storedUsername) {
-        loadMessages(storedUsername);
-        showUserLink(storedUsername);
-            } else { 
-        window.location.href = "/login.html";
-                    }
-        };
- 
-function loadMessages(username) {
-    var messagesContainer = document.getElementById('messagesContainer');
-    messagesContainer.innerHTML = '';
-    
-    db.collection('users').doc(username).collection('messages').orderBy('timestamp', 'desc')
-    .onSnapshot((snapshot) => {
-        messagesContainer.innerHTML = ''; 
-        var totalMessages = snapshot.size; 
-        document.getElementById('totalMessages').textContent = "You have received a total of " + totalMessages + " messages.";
-        
-        snapshot.forEach((doc) => {
-            var message = doc.data();
-            var messageDiv = document.createElement('div');
-            messageDiv.classList.add('message-box');
-            
-            var messageContent = document.createElement('p');
-            
-messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
-
-
-            var timestampDiv = document.createElement('div');
-            timestampDiv.style.fontSize = '12px';
-            timestampDiv.style.color = 'gray';
-            timestampDiv.textContent = message.timestamp ? message.timestamp.toDate().toLocaleString() : '';
-            messageDiv.appendChild(timestampDiv);
-         messageDiv.appendChild(messageContent);
-
-            var fullscreenButton = document.createElement('button');
-            fullscreenButton.textContent = "View Fullscreen";
-            fullscreenButton.classList.add('fullscreen-btn');
-            fullscreenButton.onclick = function() {
-                viewFullscreen(username, message.content);
-            };
-            messageDiv.appendChild(fullscreenButton);
-messagesContainer.appendChild(messageDiv);
-        });
-    });
-}
-
-        function viewFullscreen(username, messageContent) {
-  db.collection('users').doc(username).get().then((doc) => {
-                if (doc.exists) {
-                    var userData = doc.data();
-                    var profileImage = userData.profilePhotoURL || 'path/to/default/image.png';
-                  var username = userData.username || 'Unknown User';
-                  var userLink = window.location.origin + '/' + username;
-
-                  var formattedMessageContent = messageContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
-
-                    var overlay = document.createElement('div');
-                    overlay.style.position = 'fixed';
-                    overlay.style.top = '0';
-                    overlay.style.left = '0';
-                    overlay.style.width = '100%';
-                    overlay.style.height = '100%';
-                    overlay.style.backgroundColor = 'white';
-                    overlay.style.color = 'black';
-                    
- overlay.style.display = 'flex';
-                              overlay.style.justifyContent = 'center';
-                    overlay.style.alignItems = 'flex-start';
-                    overlay.style.zIndex = '1000';
-                    overlay.style.padding = '0px';
-                    overlay.innerHTML = `
-        <div style="height:100%;">
-   <div style="
-   text-align: center;
-   width: 100%;
-   padding: 30px 0px;">
-<div class="logo">DakBaksho</div>
-   </div>
-       <div class="msgbx">
-        <div class="profile">
-            <img src="${profileImage}" alt="Profile Picture">
-            <div class="details">
-   @${username} has received <br> an anonymous message.
-            </div>
-        </div>
-        
-        <div class="message-input">
-         <div>${formattedMessageContent}</div>
-        </div>
-</div>
-                   
-    <button class="modalclose" onclick="closeFullscreen(this.parentNode.parentNode)">&times;</button>
-    </div>
-    
-   <div class="linkcontainer">
-    <div>Send me Anonymous Message on</div>
-    <div style="color: #a3a5a7;">${userLink}</div>
-   </div>
-   `;
-                    document.body.appendChild(overlay);
+    window.onload = function() {
+        // Request notification permission from the user
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission().then(permission => {
+                if (permission !== "granted") {
+                    console.warn("Notification permission denied");
                 }
             });
         }
 
-        function closeFullscreen(overlay) {
-            document.body.removeChild(overlay);
-        }
-
-        function showUserLink(username) {
-            var userLinkContainer = document.getElementById('userLinkContainer');
-            var userLinkDiv = document.getElementById('userLink');
-            var userLink = window.location.origin + '/' + username;
-
-            userLinkDiv.textContent = userLink;
-            userLinkContainer.style.display = 'block';
-
-db.collection('users').doc(username).get().then((doc) => {
-                if (doc.exists) {
-                    var userData = doc.data();
-                    var profileImage = userData.profilePhotoURL || 'path/to/default/image.png'; // Default image path
-                 document.querySelector('.background-blur').style.backgroundImage = `url(${profileImage})`;
-   document.getElementById('userImage').src = profileImage;
-                    document.getElementById('userImage').style.display = 'block';
-                  
-document.getElementById('userName').textContent = userData.username || 'Unknown User';
-                  
-document.getElementById('navuserName').textContent = userData.username || 'Unknown User';
-
-                }
-            });
-
-            document.querySelector('body').style.background = 'white';  document.querySelector('.imagebox').style.display = 'block'; document.getElementById('logoutButton').style.display = 'block';
-document.querySelector('.totalmsg').style.display = 'block';
-        }
-
-        function copyLink() {
-            var userLinkDiv = document.getElementById('userLink');
-            navigator.clipboard.writeText(userLinkDiv.textContent).then(() => {
-                alert("Link copied to clipboard!");
-            });
-        }
-
-function shareOnFacebook() {
-    var userLink = document.getElementById('userLink').textContent;
-    var facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(userLink)}&t=Send%20me%20anonymous%20message`;
-    window.open(facebookShareUrl, '_blank', 'width=600,height=400');
-}
-
-function shareOnInsta() {
-var userLink = document.getElementById('userLink').textContent;
-document.getElementById('displayUserLink').textContent = userLink;
-document.getElementById('instaShareModal').style.display = 'block';
-}
-
-function closeInstaShareModal() {
-document.getElementById('instaShareModal').style.display = 'none';
-}
-
-async function proceedToInsta() {    closeInstaShareModal();
-    const imageUrl = "https://dakbaksho.github.io/files/metaimage.jpg";
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
-    const file = new File([blob], "DakBaksho.jpg", { type: "image/jpeg" });
-    const downloadLink = document.createElement("a");
-    downloadLink.href = URL.createObjectURL(file);
-    downloadLink.download = "metaimage.jpg";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    const instaShareUrl = `instagram://story-camera?background_image_url=${imageUrl}`;
-    window.open(instaShareUrl, '_blank');
-}
-
-function shareOnWhatsApp() {
-    var userLink = document.getElementById('userLink').textContent;
-    var message = `Send me anonymous message on: ${encodeURIComponent(userLink)}`;
-    var whatsappShareUrl = `https://wa.me/?text=${message}`;
-    
-    window.open(whatsappShareUrl, '_blank');
-}
-
-
-        function logout() {
-            localStorage.removeItem('username');
-            location.reload();
+        var storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            loadMessages(storedUsername);
+            showUserLink(storedUsername);
+            listenForNewMessages(storedUsername); // Start listening for new messages
+        } else { 
             window.location.href = "/login.html";
         }
-      
-          function toggleMenu() {
-        const navbar = document.querySelector('.navbar ul');
-        const menuIcon = document.querySelector('.menu-icon');
-        navbar.classList.toggle('active');
-        menuIcon.classList.toggle('change');
+    };
+ 
+    function loadMessages(username) {
+        var messagesContainer = document.getElementById('messagesContainer');
+        messagesContainer.innerHTML = '';
+        
+        db.collection('users').doc(username).collection('messages').orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+            messagesContainer.innerHTML = ''; 
+            var totalMessages = snapshot.size; 
+            document.getElementById('totalMessages').textContent = "You have received a total of " + totalMessages + " messages.";
+            
+            snapshot.forEach((doc) => {
+                var message = doc.data();
+                var messageDiv = document.createElement('div');
+                messageDiv.classList.add('message-box');
+                
+                var messageContent = document.createElement('p');
+                messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+
+                var timestampDiv = document.createElement('div');
+                timestampDiv.style.fontSize = '12px';
+                timestampDiv.style.color = 'gray';
+                timestampDiv.textContent = message.timestamp ? message.timestamp.toDate().toLocaleString() : '';
+                messageDiv.appendChild(timestampDiv);
+                messageDiv.appendChild(messageContent);
+
+                var fullscreenButton = document.createElement('button');
+                fullscreenButton.textContent = "View Fullscreen";
+                fullscreenButton.classList.add('fullscreen-btn');
+                fullscreenButton.onclick = function() {
+                    viewFullscreen(username, message.content);
+                };
+                messageDiv.appendChild(fullscreenButton);
+                messagesContainer.appendChild(messageDiv);
+            });
+        });
     }
 
-    document.addEventListener('click', function(event) {
-        const navbar = document.querySelector('.navbar ul');
-        const menuIcon = document.querySelector('.menu-icon');
-        const isClickInsideNavbar = navbar.contains(event.target);
-        const isClickInsideMenuIcon = menuIcon.contains(event.target);
-        if (!isClickInsideNavbar && !isClickInsideMenuIcon) {
-            navbar.classList.remove('active');
-            menuIcon.classList.remove('change');
-        }
-    });
+    // Function to listen for new messages and show a notification
+    function listenForNewMessages(username) {
+        var messagesCollection = db.collection('users').doc(username).collection('messages');
 
-    </script>
+        messagesCollection.orderBy('timestamp', 'desc').limit(1)
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    var newMessage = change.doc.data();
+                    showNotification("New Anonymous Message", newMessage.content);
+                }
+            });
+        });
+    }
+
+    // Function to show the notification
+    function showNotification(title, body) {
+        if (Notification.permission === "granted") {
+            var notification = new Notification(title, {
+                body: body,
+                icon: "path/to/your/icon.png" // Optional: You can add an icon for the notification
+            });
+
+            // Optionally handle click event on the notification
+            notification.onclick = function () {
+                window.focus();
+                this.close(); // Close the notification
+            };
+        }
+    }
+
+    function viewFullscreen(username, messageContent) {
+        db.collection('users').doc(username).get().then((doc) => {
+            if (doc.exists) {
+                var userData = doc.data();
+                var profileImage = userData.profilePhotoURL || 'path/to/default/image.png';
+                var username = userData.username || 'Unknown User';
+                var userLink = window.location.origin + '/' + username;
+
+                var formattedMessageContent = messageContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+
+                var overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'white';
+                overlay.style.color = 'black';
+                
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'flex-start';
+                overlay.style.zIndex = '1000';
+                overlay.style.padding = '0px';
+                overlay.innerHTML = `
+                    <div style="height:100%;">
+                        <div style="text-align: center; width: 100%; padding: 30px 0px;">
+                            <div class="logo">DakBaksho</div>
+                        </div>
+                        <div class="msgbx">
+                            <div class="profile">
+                                <img src="${profileImage}" alt="Profile Picture">
+                                <div class="details">
+                                    @${username} received <br> a anonymous message.
+                                </div>
+                            </div>
+                            
+                            <div class="message-input">
+                                <div>${formattedMessageContent}</div>
+                            </div>
+                        </div>
+                        
+                        <button class="modalclose" onclick="closeFullscreen(this.parentNode.parentNode)">&times;</button>
+                    </div>
+                    
+                    <div class="linkcontainer">
+                        <div>Send me Anonymous Message on</div>
+                        <div style="color: #a3a5a7;">${userLink}</div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+        });
+    }
+
+    function closeFullscreen(overlay) {
+        document.body.removeChild(overlay);
+    }
+
+    function showUserLink(username) {
+        var userLinkContainer = document.getElementById('userLinkContainer');
+        var userLinkDiv = document.getElementById('userLink');
+        var userLink = window.location.origin + '/' + username;
+
+        userLinkDiv.textContent = userLink;
+        userLinkContainer.style.display = 'block';
+
+        db.collection('users').doc(username).get().then((doc) => {
+            if (doc.exists) {
+                var userData = doc.data();
+                var profileImage = userData.profilePhotoURL || 'path/to/default/image.png'; // Default image path
+                document.querySelector('.background-blur').style.backgroundImage = `url(${profileImage})`;
+                document.getElementById('userImage').src = profileImage;
+                document.getElementById('userImage').style.display = 'block';
+                document.getElementById('userName').textContent = userData.username || 'Unknown User';
+                document.getElementById('navuserName').textContent = userData.username || 'Unknown User';
+            }
+        });
+
+        document.querySelector('body').style.background = 'white';  
+        document.querySelector('.imagebox').style.display = 'block'; 
+        document.getElementById('logoutButton').style.display = 'block';
+        document.querySelector('.totalmsg').style.display = 'block';
+    }
+
+    function copyLink() {
+        var userLinkDiv = document.getElementById('userLink');
+        navigator.clipboard.writeText(userLinkDiv.textContent).then(() => {
+            alert("Link copied to clipboard!");
+        });
+    }
+
+    function shareOnFacebook() {
+        var userLink = document.getElementById('userLink').textContent;
+        var facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(userLink)}`;
+        window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+    }
+
+    function shareOnInsta() {
+        var userLink = document.getElementById('userLink').textContent;
+        document.getElementById('displayUserLink').textContent = userLink;
+        document.getElementById('instaShareModal').style.display = 'block';
+    }
+
+    function closeInstaShareModal() {
+        document.getElementById('instaShareModal').style.display = 'none';
+    }
+
+    async function proceedToInsta() {    
+        closeInstaShareModal();
+        const imageUrl = "https://dakbaksho.github.io/files/metaimage.jpg";
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], "DakBaksho.jpg", { type: "image/jpeg" });
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(file);
+        downloadLink.download = "metaimage.jpg";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        const instaShareUrl = `instagram://story-camera?background_image_url=${imageUrl}`;
+        window.open(instaShareUrl, '_blank');
+    }
+
+    function shareOnWhatsApp() {
+        var userLink = document.getElementById('userLink').textContent;
+        var message = `Send me anonymous message on: ${encodeURIComponent(userLink)}`;
+        var whatsappShareUrl = `https://wa.me/?text=${message}`;
+        
+        window.open(whatsappShareUrl, '_blank');
+    }
+
+    function logout() {
+        localStorage.removeItem('username');
+        window.location.href = "/login.html";
+    }
+</script>
+
 </body>
 </html>
