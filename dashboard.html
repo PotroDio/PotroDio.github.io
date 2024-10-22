@@ -849,6 +849,24 @@ box-shadow:0 0 0 2px #25D366;
         localStorage.removeItem('username');
         window.location.href = "/login.html";
     }
+  
+          function toggleMenu() {
+        const navbar = document.querySelector('.navbar ul');
+        const menuIcon = document.querySelector('.menu-icon');
+        navbar.classList.toggle('active');
+        menuIcon.classList.toggle('change');
+    }
+
+    document.addEventListener('click', function(event) {
+        const navbar = document.querySelector('.navbar ul');
+        const menuIcon = document.querySelector('.menu-icon');
+        const isClickInsideNavbar = navbar.contains(event.target);
+        const isClickInsideMenuIcon = menuIcon.contains(event.target);
+        if (!isClickInsideNavbar && !isClickInsideMenuIcon) {
+            navbar.classList.remove('active');
+            menuIcon.classList.remove('change');
+        }
+    });
 </script>
 
 </body>
