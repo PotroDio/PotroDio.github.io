@@ -92,7 +92,7 @@ html, body {
       }
       
       .emailrecover {
-        width: 230px;
+        width: 200px;
         padding: 14px 16px;
         border: 2px solid white;
         border-radius: 3px;
@@ -104,7 +104,7 @@ html, body {
         }
 
         .submitbutton {
-          width:265px;
+          width:235px;
           background-color: #E98E15;
           color: #fff;
           border: none;
@@ -135,9 +135,12 @@ html, body {
     margin: auto;
     color: white;
   font-family:Lato,sans-serif;
+text-align: center;
     }
 
-   .signuplink a { 
+   .signuplink a {
+    display: inline-block;
+    margin-top: 4px;
     color: #E98E15;
     font-weight: bold;
     text-transform: uppercase;
@@ -316,7 +319,7 @@ document.getElementById("loadingModal").style.display = "none";
     }
 
     async function getUserByEmail(email) {
-      const usersRef = collection(db, "users"); // Change "users" to your actual collection name
+      const usersRef = collection(db, "users");
       const q = query(usersRef, where("email", "==", email));
       const querySnapshot = await getDocs(q);
 
@@ -371,9 +374,9 @@ document.addEventListener("DOMContentLoaded", () => {
     </a>
     <nav class="navbar">
         <ul>
-            <li><a href="https://dakbaksho.github.io/login">Login</a></li>
+            <li><a href="https://dakbaksho.github.io">Home</a></li>
             <li><a href="https://dakbaksho.github.io/signup">Signup</a></li>
-            <li><a href="https://dakbaksho.github.io/dashboard">Dashboard</a></li>
+            <li><a href="https://antarweb.github.io">Developer</a></li>
         </ul>
         <div class="menu-icon" onclick="toggleMenu()">
             <div class="bar1"></div>
@@ -392,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <input type="email" class="emailrecover" id="email" placeholder="Enter Your Email" required>
     <button type="submit" class="submitbutton">Submit</button>
   </form>
-<div class="signuplink">Remember Password? <a href="/login.html">Login</a> Now</div>
+<div class="signuplink">Remember Password?<br><a href="/login.html">Login</a> Now</div>
   <div id="result"></div>
 </div>
 
