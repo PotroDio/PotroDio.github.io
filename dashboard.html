@@ -30,9 +30,9 @@
 <link rel="manifest" href="/site.webmanifest">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
 
     <style>
       @import url(https://fonts.googleapis.com/css?family=Carattere);
@@ -590,7 +590,7 @@ box-shadow:0 0 0 2px #25D366;
 
  
  <div id="instaShareModal" class="instamodal" style="display:none;">
-    <div class="instamodal-content">
+     <div class="instamodal-content">
         <span class="close" onclick="closeInstaShareModal()">&times;</span><br>
         <h2>How to Share on Instagram</h2>
         <p>To share your link on Instagram, <br>memorize these steps and click <br> "Proceed to Instagram"</p>
@@ -615,10 +615,9 @@ box-shadow:0 0 0 2px #25D366;
 </div>
     </div>
 
-
- <script>
+<script>
     var firebaseConfig = {
-        apiKey: "AIzaSyAvC3w2...",
+        apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
         authDomain: "anonymous-messages-692c3.firebaseapp.com",
         projectId: "anonymous-messages-692c3",
         storageBucket: "anonymous-messages-692c3.appspot.com",
@@ -631,37 +630,33 @@ box-shadow:0 0 0 2px #25D366;
     var db = firebase.firestore();
     const messaging = firebase.messaging();
 
-    // Register Service Worker and get FCM Token
-    navigator.serviceWorker.register('/firebase-messaging-sw.js')
-        .then((registration) => {
-            messaging.useServiceWorker(registration);
-            return messaging.getToken({ vapidKey: 'BMkT98i_ZrwjVVmClQPLpY6MVxVeZLnLrAH0AGdkriV6JWt7KKQBiukuX5rZtqAHDwu8ftVxbIi4K8B5Y5NdiwA' });
-        })
-        .then((token) => {
-            console.log('FCM Token:', token);
-            // Optionally send this token to your server
-        })
-        .catch((err) => {
-            console.error('Unable to get permission to notify.', err);
-        });
-
-    // Request permission for notifications
-    messaging.requestPermission()
-        .then(() => {
-            console.log('Notification permission granted.');
+    // Request permission and get token for web notifications
+    messaging.getToken({ vapidKey: 'BMkT98i_ZrwjVVmClQPLpY6MVxVeZLnLrAH0AGdkriV6JWt7KKQBiukuX5rZtqAHDwu8ftVxbIi4K8B5Y5NdiwA' })
+        .then((currentToken) => {
+            if (currentToken) {
+                console.log('FCM Token:', currentToken);
+                // Save token to Firestore or localStorage if necessary
+            } else {
+                console.warn('No registration token available. Request permission to generate one.');
+            }
         })
         .catch((err) => {
-            console.error('Unable to get permission to notify.', err);
+            console.error('An error occurred while retrieving token.', err);
         });
 
     // Handle incoming messages
     messaging.onMessage((payload) => {
         console.log('Message received. ', payload);
-        // Show a notification or update the UI when a new message arrives
-        new Notification(payload.notification.title, {
+        // Show notification
+        const notificationTitle = 'New Message Received';
+        const notificationOptions = {
             body: payload.notification.body,
-            icon: payload.notification.icon
-        });
+            icon: '/path/to/icon.png'  // Add a proper icon path
+        };
+
+        if (Notification.permission === 'granted') {
+            new Notification(notificationTitle, notificationOptions);
+        }
     });
 
     window.onload = function () {
@@ -825,9 +820,15 @@ box-shadow:0 0 0 2px #25D366;
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
-        const instaShareUrl = `instagram://story-camera?background_image_url=${imageUrl}`;
+        const instaShareUrl = `instagram://story-camera?background_image=${encodeURIComponent(userLink)}`;
         window.open(instaShareUrl, '_blank');
     }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "/login.html";
+    }
+
 </script>
 
 </body>
