@@ -40,6 +40,7 @@
     <style>
      @import url('https://fonts.cdnfonts.com/css/avenir');
       @import url(https://fonts.googleapis.com/css?family=Carattere);
+      @import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
        *{
     box-sizing: border-box;
 }
@@ -193,6 +194,26 @@ animation: heartbeat 1.5s ease-in-out infinite both;
     background-color: #EC1187;
 }
 
+      .no-user {
+        color: white;
+        font-weight: 700;
+        font-size:40px;
+        font-family: "Tangerine", cursive;
+        width: 300px;
+        padding: 100px 0;
+ background: #118AEC linear-gradient(to bottom right, #1082FF 0%, #11C1EC 100%);
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-attachment: fixed;
+        border:2px solid white;
+        border-radius: 30px;
+        text-align: center; 
+        box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.4);
+      }
+      a {
+        text-decoration: none;
+        cursor: pointer;
+      }
 @-webkit-keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
@@ -266,14 +287,14 @@ animation: heartbeat 1.5s ease-in-out infinite both;
 </head>
 <body>
 <div class="container">
-<div class="logo">DakBaksho</div>
+<a href="https://dakbaksho.github.io"><div class="logo">DakBaksho</div></a>
  <div class="msg-container">
   <div class="heading">
         <div class="profile">
-            <img id="profileImage" class="profile-img" alt="Profile Image">
+            <img id="profileImage" class="profile-img" src="https://dakbaksho.github.io/files/log.jpg" alt="Profile Image">
             <div class="profile-info">
-                <div id="usernameTitle">Name</div>
-                <div id="usernamebody">send anonymous messages!</div>
+                <div id="usernameTitle">@Username</div>
+                <div id="usernamebody">Send Anonymous Message to username!</div>
             </div>
         </div>
   </div>
@@ -283,67 +304,67 @@ animation: heartbeat 1.5s ease-in-out infinite both;
  </div>
         <div id="charCount" style="color: white; font-size: 12px; display: none;text-align: center; margin-top:10px;">You have reached the maximum character limit!</div><br><br>
         <button onclick="sendMessage()" class="send-btn">Send!</button>
-
+<div class="no-user" style="display: none;">
+    No User Found
+</div>
 <div style="color: white; margin-top: 120px; margin-bottom: 15px; font-weight: bold; font-size: 18px; text-align: center;">Wanna get anonymous message without Facebook or Instagram?</div>
-
         <button onclick="getMessage()" class="get-btn">Click Me!</button>
     </div>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
+        authDomain: "anonymous-messages-692c3.firebaseapp.com",
+        projectId: "anonymous-messages-692c3",
+        storageBucket: "anonymous-messages-692c3.appspot.com",
+        messagingSenderId: "152307243781",
+        appId: "1:152307243781:web:f9e7787bcab188aefa756c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    var urlParams = new URLSearchParams(window.location.search);
+    var username = urlParams.get('user').toLowerCase(); db.collection('users').doc(username).get().then((doc) => {
+        if (doc.exists) {
+            var userData = doc.data();
+            document.getElementById('usernameTitle').textContent = "@" + username;
+            document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
+            document.getElementById('profileImage').src = userData.profilePhotoURL;
+        } else {
+            document.querySelector('.msg-container').style.display = 'none'; document.querySelector('.send-btn').style.display = 'none';
+            document.querySelector('.no-user').style.display = 'block';
+        }
+    });
 
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
-            authDomain: "anonymous-messages-692c3.firebaseapp.com",
-            projectId: "anonymous-messages-692c3",
-            storageBucket: "anonymous-messages-692c3.appspot.com",
-            messagingSenderId: "152307243781",
-            appId: "1:152307243781:web:f9e7787bcab188aefa756c"
-        };
+    var messageInput = document.getElementById('messageInput');
+    var charCount = document.getElementById('charCount');
+  messageInput.addEventListener('input', function() {
+        if (messageInput.value.length >= 250) {
+            charCount.style.display = 'block';
+        } else {
+            charCount.style.display = 'none';
+        }
+    });
 
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
-
-        var urlParams = new URLSearchParams(window.location.search);
-        var username = urlParams.get('user');
-        document.getElementById('usernameTitle').textContent = "@" + username;
-        document.getElementById('usernamebody').textContent = "Send Anonymous Message to " + username + "!";
-db.collection('users').doc(username).get().then((doc) => {
-            if (doc.exists) {
-                var userData = doc.data();
-                document.getElementById('profileImage').src = userData.profilePhotoURL;
-            }
-        });
-
-        var messageInput = document.getElementById('messageInput');
-        var charCount = document.getElementById('charCount');
-
-        messageInput.addEventListener('input', function() {
-            if (messageInput.value.length >= 250) {
-                charCount.style.display = 'block';
-            } else {
+    function sendMessage() {
+        var message = messageInput.value.trim().replace(/\n/g, '\\n');
+        if (message) {
+            db.collection('users').doc(username).collection('messages').add({
+                content: message,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                alert("Message sent!");
+                messageInput.value = '';
                 charCount.style.display = 'none';
-            }
-        });
-
-        function sendMessage() {
-            var message = messageInput.value.trim().replace(/\n/g, '\\n');
-    
-            if (message) {db.collection('users').doc(username).collection('messages').add({
-                    content: message,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => {
-                    alert("Message sent!");
-                    messageInput.value = '';
-                    charCount.style.display = 'none';
-                });
-            } else {
-                alert("Message cannot be empty!");
-            }
+            });
+        } else {
+            alert("Message cannot be empty!");
         }
+    }
 
-        function getMessage() {
-            window.location.href = "/signup.html";
-        }
-    </script>
+    function getMessage() {
+        window.location.href = "/signup.html";
+    }
+</script>
+
 </body>
 
 </html>
