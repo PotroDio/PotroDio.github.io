@@ -771,7 +771,7 @@ document.querySelector('.totalmsg').style.display = 'block';
 
 function shareOnFacebook() {
     var userLink = document.getElementById('userLink').textContent;
-    var facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(userLink)}`;
+    var facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(userLink)}&t=Send%20me%20anonymous%20message`;
     window.open(facebookShareUrl, '_blank', 'width=600,height=400');
 }
 
