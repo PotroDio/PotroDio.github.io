@@ -1,5 +1,5 @@
-importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js');
 
 firebase.initializeApp({
     apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
@@ -12,11 +12,12 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-    const notificationTitle = payload.notification.title;
+messaging.onBackgroundMessage(function (payload) {
+    console.log('Received background message ', payload);
+    const notificationTitle = 'New Background Message';
     const notificationOptions = {
         body: payload.notification.body,
-        icon: payload.notification.icon,
+        icon: '/path/to/icon.png' // Add icon path
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);
