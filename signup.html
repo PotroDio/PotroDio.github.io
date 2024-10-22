@@ -488,7 +488,7 @@ html, body {
  document.getElementById('username').addEventListener('input', checkUsernameAvailability);
 
 function checkUsernameAvailability() {
-    var username = document.getElementById('username').value.trim();
+    var username = document.getElementById('username').value.trim().toLowerCase();;
     var usernameWarning = document.getElementById('usernameWarning');
     var availabilityMessage = document.getElementById('usernameAvailabilityMessage');
 
@@ -600,7 +600,7 @@ function validateEmailInput() {
 function signup() {
 document.getElementById('loadingModal').classList.add('active');
 
-    var username = document.getElementById('username').value.trim();
+    var username = document.getElementById('username').value.trim().toLowerCase();;
     var email = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value.trim();
     var profilePhoto = document.getElementById('profilePhoto').files[0];
