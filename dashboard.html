@@ -39,6 +39,7 @@
       @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
       @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap');
+
         body {
   font-family: "Lato", sans-serif;
  display: flex;
@@ -241,16 +242,18 @@ font-family: "Passion One", sans-serif;
       height: auto;
       }
 .msgbx-container {
- width: 400px;
- display: flex;
- align-items: center;
- justify-content: center;
- }
+   width:100vw;
+    max-width:400px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
 .msgbx {
  margin-top: 10px;
  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
  border-radius:20px;
- width: 85%;
+ width: 90%;
       }
         .msgbx .profile {
           display: flex;
@@ -289,8 +292,6 @@ font-family: "Passion One", sans-serif;
           display: block;
         }
 
-
-
         .msgbx .message-input {
     min-height: 100px;
     border: 0px solid black;
@@ -304,10 +305,6 @@ font-family: "Passion One", sans-serif;
     font-weight: bold;
 text-align: center;
         }
-
-
-
-
 
       .linkcontainer {
       position: absolute;
@@ -339,14 +336,53 @@ text-align: center;
       }
 
 .fullscr-overlay {
-position: fixed;
-top: 0;
-left:0;
-width: 100%;
-height:100%;
-background: white;
-z-index: 1000;
-padding:0
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.navigation-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-icon {
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.6);
+   color: white;
+    cursor: pointer;
+    padding: 8px;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    display: none;
+   opacity:0.5;
+}
+
+.nav-icon.left {
+    position: absolute;
+    left: 0px;
+    border-radius: 0px 3px 3px 0px;
+}
+
+.nav-icon.right {
+    position: absolute;
+    right: 0px;
+    border-radius: 3px 0px 0px 3px;
+}
+
+.nav-icon:hover {
+    background-color: black;
 }
 
 .connection-overlay {
@@ -372,7 +408,103 @@ padding:0
     font-weight: bold;
 }
 
+.instamodal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
 
+.instamodal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius:15px;
+    width: 80%;
+    text-align: center;
+}
+
+.close {
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.step{
+display: block;
+font-weight: 800;
+margin:3px;
+}
+
+.instamodal div {
+margin: 18px auto;
+}
+
+#proceedToInsta {
+background: green;
+border: none;
+border-radius:2px;
+padding:14px;
+font-size:1rem;
+color: white;
+font-weight: 800;
+cursor: pointer;
+}
+
+.share-buttons{
+display:flex;
+justify-content:center;
+gap:16px;
+flex-direction:row;
+width:100%;
+padding-top: 20px;
+}
+
+.share-buttons a {
+position: relative;
+text-decoration:none;
+border:2px solid white;
+color: black; 
+padding:0;
+border-radius:50px;
+display:inline-block;
+text-align:center;
+width:44px;
+height:44px;
+}
+
+.share-buttons .fab {
+color: white;
+margin:0;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:24px;
+font-weight: normal;
+}
+.facebook {
+background:#4267B2;
+box-shadow:0 0 0 2px #4267B2;
+}
+.instagram {
+  background: #f09433; 
+background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+box-shadow:0 0 0 2px #e6683c;
+  }
+.whatsapp {
+background:#25D366;
+box-shadow:0 0 0 2px #25D366;
+ }
 
 .header {
     display: flex;
@@ -477,104 +609,6 @@ padding:0
        display: none ! important;
     }
 }
-
-.instamodal {
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.instamodal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius:15px;
-    width: 80%;
-    text-align: center;
-}
-
-.close {
-    color: red;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.step{
-display: block;
-font-weight: 800;
-margin:3px;
-}
-
-.instamodal div {
-margin: 18px auto;
-}
-
-#proceedToInsta {
-background: green;
-border: none;
-border-radius:2px;
-padding:14px;
-font-size:1rem;
-color: white;
-font-weight: 800;
-cursor: pointer;
-}
-
-.share-buttons{
-display:flex;
-justify-content:center;
-gap:16px;
-flex-direction:row;
-width:100%;
-padding-top: 20px;
-}
-
-.share-buttons a {
-position: relative;
-text-decoration:none;
-border:2px solid white;
-color: black; 
-padding:0;
-border-radius:50px;
-display:inline-block;
-text-align:center;
-width:44px;
-height:44px;
-}
-
-.share-buttons .fab {
-color: white;
-margin:0;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:24px;
-font-weight: normal;
-}
-.facebook {
-background:#4267B2;
-box-shadow:0 0 0 2px #4267B2;
-}
-.instagram {
-  background: #f09433; 
-background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
-background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
-background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
-box-shadow:0 0 0 2px #e6683c;
-  }
-.whatsapp {
-background:#25D366;
-box-shadow:0 0 0 2px #25D366;
- }
   </style>
 </head>
 <body>
@@ -635,7 +669,9 @@ box-shadow:0 0 0 2px #25D366;
         </div>
 
       <div id="totalMessages" class="totalmsg"></div>
-
+<marquee style="margin-bottom: 20px;" behavior="scroll" direction="left" scrollamount="7" scrolldelay="0">
+    Click message or "View Fullscreen" button before share. Take a screenshot and share it with your friends. You can slide with fingers or click arrows to see next or previous messages.
+</marquee>
         <div id="messagesContainer"></div>
 
 <div id="instaShareModal" class="instamodal" style="display:none;">
@@ -665,7 +701,13 @@ box-shadow:0 0 0 2px #25D366;
     </div>
 
     <div class="fullscr-overlay" id="fullscreenOverlay" style="display: none;">
-        <div style="height:100%;">
+        <div style="height:100%; position: relative;">
+
+<div class="navigation-icons">
+            <div class="nav-icon left" onclick="showPreviousMessage()">❮</div>
+            <div class="nav-icon right" onclick="showNextMessage()">❯</div>
+        </div>
+
             <div style="text-align: center;width: 100%;padding: 30px 0px;">
                 <div class="logo">DakBaksho</div>
             </div>
@@ -726,7 +768,10 @@ box-shadow:0 0 0 2px #25D366;
     window.addEventListener('online', checkConnection);
     window.addEventListener('offline', checkConnection);
         };
- 
+var currentMessageIndex = 0;
+var messagesList = [];
+var navTimeout;
+
 function loadMessages(username) {
     var messagesContainer = document.getElementById('messagesContainer');
     messagesContainer.innerHTML = '';
@@ -737,55 +782,119 @@ function loadMessages(username) {
         var totalMessages = snapshot.size; 
         document.getElementById('totalMessages').textContent = "You have received a total of " + totalMessages + " messages.";
         
+        messagesList = [];
+
         snapshot.forEach((doc) => {
             var message = doc.data();
+            messagesList.push(message);
+
             var messageDiv = document.createElement('div');
             messageDiv.classList.add('message-box');
             
             var messageContent = document.createElement('p');
-            
-messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
-
+            messageContent.innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
 
             var timestampDiv = document.createElement('div');
             timestampDiv.style.fontSize = '12px';
             timestampDiv.style.color = 'gray';
             timestampDiv.textContent = message.timestamp ? message.timestamp.toDate().toLocaleString() : '';
             messageDiv.appendChild(timestampDiv);
-         messageDiv.appendChild(messageContent);
+            messageDiv.appendChild(messageContent);
+
+            messageDiv.onclick = function() {
+                viewFullscreen(username, messagesList.indexOf(message));
+            };
 
             var fullscreenButton = document.createElement('button');
             fullscreenButton.textContent = "View Fullscreen";
             fullscreenButton.classList.add('fullscreen-btn');
             fullscreenButton.onclick = function() {
-                viewFullscreen(username, message.content);
+                viewFullscreen(username, messagesList.indexOf(message));
             };
             messageDiv.appendChild(fullscreenButton);
-messagesContainer.appendChild(messageDiv);
+            messagesContainer.appendChild(messageDiv);
         });
     });
 }
 
-function viewFullscreen(username, messageContent) {
+function viewFullscreen(username, messageIndex) {
+    currentMessageIndex = messageIndex;
+    var message = messagesList[messageIndex];
+
     db.collection('users').doc(username).get().then((doc) => {
         if (doc.exists) {
             var userData = doc.data();
             var profileImage = userData.profilePhotoURL || 'path/to/default/image.png';
             var username = userData.username || 'Unknown User';
             var userLink = window.location.origin + '/' + username;
-document.getElementById('profileImage').src = profileImage;
+
+            document.getElementById('profileImage').src = profileImage;
             document.getElementById('userDetails').innerHTML = `@${username} has received <br> an anonymous message.`;
-            document.getElementById('messageContent').innerHTML = messageContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+            document.getElementById('messageContent').innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
             document.getElementById('userLinkOverlay').textContent = userLink;
+
 document.getElementById('fullscreenOverlay').style.display = 'flex';
-document.getElementById('fullscreenOverlay').style.justifyContent = 'center';
-document.getElementById('fullscreenOverlay').style.alignItems = 'flex-start';
+            document.getElementById('fullscreenOverlay').style.justifyContent = 'center';
+            document.getElementById('fullscreenOverlay').style.alignItems = 'flex-start';
+            showNavigationIcons();
         }
     });
 }
 
 function closeFullscreen() {
 document.getElementById('fullscreenOverlay').style.display = 'none';
+}
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('fullscreenOverlay').addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    showNavigationIcons();
+});
+
+document.getElementById('fullscreenOverlay').addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (touchEndX < touchStartX) {
+        showNextMessage();
+    }
+    if (touchEndX > touchStartX) {
+        showPreviousMessage();
+    }
+}
+
+function showNextMessage() {
+    if (currentMessageIndex < messagesList.length - 1) {
+        currentMessageIndex++;
+        updateFullscreenContent(messagesList[currentMessageIndex]);
+    }
+}
+
+function showPreviousMessage() {
+    if (currentMessageIndex > 0) {
+        currentMessageIndex--;
+        updateFullscreenContent(messagesList[currentMessageIndex]);
+    }
+}
+
+function updateFullscreenContent(message) {
+    document.getElementById('messageContent').innerHTML = message.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+}
+
+function showNavigationIcons() {
+    clearTimeout(navTimeout); 
+
+    document.querySelector('.nav-icon.left').style.display = 'block';
+    document.querySelector('.nav-icon.right').style.display = 'block';
+
+    navTimeout = setTimeout(function() {
+        document.querySelector('.nav-icon.left').style.display = 'none';
+        document.querySelector('.nav-icon.right').style.display = 'none';
+    }, 800);
 }
 
         function showUserLink(username) {
@@ -894,9 +1003,6 @@ function checkConnection() {
         document.getElementById('connectionError').style.display = 'none';
     }
 }
-
-
-
 
     </script>
 </body>
