@@ -61,40 +61,29 @@ html, body {
      html::-webkit-scrollbar {
     display: none;
       }
-        .signupbody {
- display: flex;
- align-items: center;
- justify-content: center;
-     }
 
-   .signupbox {margin: 40px auto;}
-        .container {
-          display: block;
-            background-color: #FFFFFF29;
-            padding: 20px 0px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 350px;
-            max-width: auto;
-            position: relative;
-        }
+.signupbody {
+    display: flex;
+    justify-content: center;
+}
 
+.signupbox {
+    display: block;
+    position: relative;
+    background-color: #FFFFFF29;
+    padding: 25px 0;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
 
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
+.container {
+    display: block;
+    flex-direction: column;
+    width: 100%;
+}
         .image-container {
             text-align: center;
             margin-bottom: 20px;
@@ -106,7 +95,7 @@ html, body {
         }
 
         .warning {
-          color: white;
+          color: black;
           display: none;
           font-size:12px;
           text-align: left;
@@ -136,6 +125,35 @@ html, body {
             display: block;
         }
 
+    .dots-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+     gap: 10px;
+    padding-top:30px; 
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      background-color: #3498db;
+      border-radius: 50%;
+      animation: bounce 0.6s infinite alternate;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+      to {
+        transform: translateY(-100%);
+      }
+    }
         .cropper-container {
           width: 300px;
             max-width: 100%;
@@ -143,6 +161,21 @@ html, body {
             margin-bottom: 20px;
         }
 
+        #cropModal button,
+        .signup-info-modal button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #cropModal button:hover,
+       .signup-info-modal button:hover {
+            background-color: green;
+        }
         #croppedImage {
             width: 100px;
             height: 100px;
@@ -170,37 +203,57 @@ html, body {
         font-weight: 200;
         line-height:0.6;
       }
-      
-      .signupbox input[type="text"],
-      .signupbox input[type="password"],
-      .signupbox input[type="email"],
-      .signupbox input[type="file"] {
-            width: 230px;
-            padding: 14px 16px;
-            border: 2px solid white;
-            border-radius: 3px;
-            font-size: 16px;
-          background: #DFF1FF;
-        color: black;
-        font-weight: bold;
-        font-family:Lato,sans-serif;
-        }
-        .signupbox .sign {
-            width:265px;
-            background-color: #E98E15;
-            color: #fff;
-            border: none;
-            padding: 14px 0px;
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-        }
 
-        .signupbox .sign:hover {
-            background-color: orange;
-        }
+.signuser, .signpass,
+.signmail, .signpic,
+.signbutton {
+    display: block;
+    box-sizing: border-box;
+    width: 76%;
+    padding: 14px 0px 14px 16px;
+    margin: auto 42px;
+    border: 2px solid white;
+    border-radius: 3px;
+    font-size: 16px;
+    background: #DFF1FF;
+    color: black;
+    font-weight: bold;
+    font-family: Lato, sans-serif;
+}
+ .signbutton{
+    background-color: #E98E15;
+    color: #fff;
+    border: none;
+    padding: 14px 0px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+ .signbutton:hover {
+    background-color: green;
+   }
+.password-wrapper {
+    display: block;
+    position: relative;
+    background: none;
+   width:76%;
+   margin: auto 42px;
+  }
+
+.password-wrapper button {
+    position: absolute;
+    right: 20px;
+    top: -25px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
   .signupbox .loginname,
   .signupbox .pass,
   .signupbox .mail,
@@ -218,6 +271,7 @@ html, body {
    font-size: 12px;
    text-transform: lowercase;
      } 
+
   .signupbox .signuplink {
     max-width: fit-content;
     display: block;
@@ -347,27 +401,6 @@ html, body {
     align-items: center;
     z-index: 9999;
 }
-.password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: auto;
-    margin:0px 42px;
-}
-
-.password-wrapper input {
-    flex: 1;
-}
-
-.password-wrapper button {
-    position: absolute;
-    right: 6px;
-    background: none;
-    border: none;
-    color: #007BFF;
-    cursor: pointer;
-    font-size: 14px;
-}
     </style>
 </head>
 <body>
@@ -400,19 +433,19 @@ html, body {
 
   <div class="loginname">Username
 <div class="passblock">(3-10 Character)</div></div>
-        <input type="text" maxlength="10" id="username" placeholder="Enter a username" required oninput="validateUsernameInput()">
+        <input type="text" class="signuser" maxlength="10" id="username" placeholder="Enter a username" oninput="validateUsernameInput()" required>
         <div id="usernameWarning" class="warning">Username only accepted [ a-z ], [ 0-9 ], [ _ ]</div>
 <div id="usernameAvailabilityMessage" class="warning" style="display: none;"></div>
 
 <div class="mail">Email </div>
-<input type="email" id="email" placeholder="Enter your email" required oninput="validateEmailInput()">
+<input type="email" class="signmail" id="email" placeholder="Enter your email" oninput="validateEmailInput()" required>
 <div id="emailWarning" class="warning">Please enter a valid email address.</div>
 
 
   <div class="pass">Password 
 <div class="passblock">(Minimum 6 Character)</div></div>
+    <input type="password" id="password" class="signpass" placeholder="Enter your password" oninput="validatePasswordInput()" required>
    <div class="password-wrapper">
-    <input type="password" id="password" placeholder="Enter your password" required oninput="validatePasswordInput()">
     <button type="button" id="togglePassword" onclick="togglePasswordVisibility()">
       <i class="fa fa-eye-slash" id="toggleIcon"></i>
      </button>
@@ -420,10 +453,10 @@ html, body {
   <div id="passwordWarning" class="warning">Password must be greater than 6 characters.</div>
       
   <div class="pic">Profile Photo </div>
-        <input type="file" id="profilePhoto" accept="image/*" required onchange="handleImageUpload(event)">
+        <input type="file" id="profilePhoto" class="signpic" accept="image/*" onchange="handleImageUpload(event)" required>
         <div id="photoWarning" class="warning">Please upload a profile photo.</div>
 
-        <button class="sign" onclick="signup()">Signup</button>
+        <button class="signbutton" onclick="signup()">Signup</button>
   <div class="signuplink">Already have a account? <a href="/login.html">Login</a> Now</div>
     </div>
 </div>
@@ -440,6 +473,11 @@ html, body {
 </div>
   
 <div class="modal" id="loadingModal">
+  <div class="dots-container">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
     <h2>Loading...</h2>
     <p>Please wait while we create your account.</p>
 </div>
@@ -472,9 +510,17 @@ html, body {
         window.onload = function() {
             var storedUsername = localStorage.getItem('username');
             if (storedUsername) {
-        window.location.href = "/dashboard.html";
+        window.location.hrefg = "/dashboard.html";
             }
         };
+ 
+document.getElementById('username').addEventListener('input', removeSpaces);
+document.getElementById('password').addEventListener('input', removeSpaces);
+
+function removeSpaces(event) {
+    const input = event.target;
+    input.value = input.value.replace(/\s+/g, '');
+}
 
         function validateUsername(username) {
             var regex = /^[a-zA-Z0-9_]+$/;
@@ -598,9 +644,9 @@ function validateEmailInput() {
 }
 
 function signup() {
-document.getElementById('loadingModal').classList.add('active');
+    document.getElementById('loadingModal').classList.add('active');
 
-    var username = document.getElementById('username').value.trim().toLowerCase();;
+    var username = document.getElementById('username').value.trim().toLowerCase();
     var email = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value.trim();
     var profilePhoto = document.getElementById('profilePhoto').files[0];
@@ -613,56 +659,84 @@ document.getElementById('loadingModal').classList.add('active');
     var isUsernameValid = validateUsername(username);
     var isPasswordValid = validatePassword(password);
     var isEmailValid = validateEmail(email);
-    var isPhotoCropped = !!croppedImageDataURL;
+    var isPhotoCropped = !!croppedImageDataURL; // check if the image is cropped
 
     usernameWarning.style.display = isUsernameValid ? 'none' : 'block';
     passwordWarning.style.display = isPasswordValid ? 'none' : 'block';
     emailWarning.style.display = isEmailValid ? 'none' : 'block';
     photoWarning.style.display = isPhotoCropped ? 'none' : 'block';
 
+    // Alert the user if any validation fails
+    if (!isUsernameValid) {
+        alert('Username must be 3-10 characters long and can only contain letters, numbers, and underscores.');
+    }
+    if (!isPasswordValid) {
+        alert('Password must be at least 6 characters long.');
+    }
+    if (!isEmailValid) {
+        alert('Please enter a valid email address.');
+    }
+    if (!isPhotoCropped) {
+        alert('Please upload and crop a profile photo.');
+    }
+
+    // Stop the signup process if any validation fails
     if (!isUsernameValid || !isPasswordValid || !isEmailValid || !isPhotoCropped) {
-document.getElementById('loadingModal').classList.remove('active');
+        document.getElementById('loadingModal').classList.remove('active');
         return;
     }
 
-    var userRef = db.collection('users').doc(username);
-    userRef.get().then((doc) => {
-        if (doc.exists) {
-            alert('Username already taken!');
+    // Check if email already exists in the database
+    db.collection('users').where('email', '==', email).get().then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+            alert('Email already registered!');
             document.getElementById('loadingModal').classList.remove('active');
+            return;
         } else {
-            fetch(croppedImageDataURL)
-                .then(res => res.blob())
-                .then(blob => {
-                    var storageRef = storage.ref('profilePhotos/' + username + '.png');
-                    var uploadTask = storageRef.put(blob);
-                    uploadTask.on('state_changed', 
-                        function(snapshot) {}, 
-                        function(error) {
-                            alert('Error uploading image: ' + error.message);
-                            document.getElementById('loadingModal').classList.remove('active');
-                        }, 
-                        function() {
-                            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                                userRef.set({
-                                    username: username,
-                                    email: email,
-                                    password: password,
-                                    profilePhotoURL: downloadURL
-                                }).then(() => {
-document.getElementById('loadingModal').classList.remove('active');
-                                    displaySignupInfoModal(username, email, password);
-                                }).catch((error) => {
-                                    alert('Error saving user data: ' + error.message);
+            // If email doesn't exist, proceed with username check and signup
+            var userRef = db.collection('users').doc(username);
+            userRef.get().then((doc) => {
+                if (doc.exists) {
+                    alert('Username already taken!');
+                    document.getElementById('loadingModal').classList.remove('active');
+                } else {
+                    fetch(croppedImageDataURL)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            var storageRef = storage.ref('profilePhotos/' + username + '.png');
+                            var uploadTask = storageRef.put(blob);
+                            uploadTask.on('state_changed', 
+                                function(snapshot) {}, 
+                                function(error) {
+                                    alert('Error uploading image: ' + error.message);
                                     document.getElementById('loadingModal').classList.remove('active');
-                                });
-                            });
-                        }
-                    );
-                });
+                                }, 
+                                function() {
+                                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                                        userRef.set({
+                                            username: username,
+                                            email: email,
+                                            password: password,
+                                            profilePhotoURL: downloadURL
+                                        }).then(() => {
+                                            document.getElementById('loadingModal').classList.remove('active');
+                                            displaySignupInfoModal(username, email, password);
+                                        }).catch((error) => {
+                                            alert('Error saving user data: ' + error.message);
+                                            document.getElementById('loadingModal').classList.remove('active');
+                                        });
+                                    });
+                                }
+                            );
+                        });
+                }
+            }).catch((error) => {
+                alert('Error checking username: ' + error.message);
+                document.getElementById('loadingModal').classList.remove('active');
+            });
         }
     }).catch((error) => {
-        alert('Error checking username: ' + error.message);
+        alert('Error checking email: ' + error.message);
         document.getElementById('loadingModal').classList.remove('active');
     });
 }
