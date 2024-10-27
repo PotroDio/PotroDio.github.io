@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    
     <title>DakBaksho - Anonymous Message Sender</title>
 <meta name="title" content="DakBaksho - Anonymous Message Sender">
 <meta name="description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
-
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dakbaksho.github.io">
 <meta property="og:title" content="DakBaksho - Anonymous Message Sender">
 <meta property="og:description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
 <meta property="og:image" content="https://dakbaksho.github.io/files/metaimage.jpg">
-
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://dakbaksho.github.io/">
 <meta property="twitter:title" content="DakBaksho - Anonymous Message Sender">
 <meta property="twitter:description" content="Send anonymous messages to your friends with DakBaksho! A fun and easy way to connect and enjoy anonymous interactions.">
 <meta property="twitter:image" content="https://dakbaksho.github.io/files/metaimage.jpg">
-
 <meta name="author" content="Antar Saha">
 <meta name="robots" content="index, follow">
 <meta name="keywords" content="login, dakbaksho, anonymous message sender, fun apps, antar saha, anonymous messages">
@@ -27,59 +23,4 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <style>
-        body {            
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          height: 99vh;
-        }
-    </style>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s",
-            authDomain: "anonymous-messages-692c3.firebaseapp.com",
-            projectId: "anonymous-messages-692c3",
-            storageBucket: "anonymous-messages-692c3.appspot.com",
-            messagingSenderId: "152307243781",
-            appId: "1:152307243781:web:f9e7787bcab188aefa756c"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var path = window.location.pathname.toLowerCase();
-            var user = path.split("/").pop();
-            if (user) {
-                db.collection('users').doc(user).get().then((doc) => {
-                    if (doc.exists) {
-                        window.location.href = `/user.html?user=${user}`;
-                    } else {
-                        document.body.innerHTML = `
-                            <div><h1>Error: User not found</h1>
-                            <p>The user you're looking for doesn't exist.<br>Go to <a href="https://dakbaksho.github.io/" style="text-decoration: none;">Homepage</a></p>
-                            </div>
-                            `;
-                   ;
-                    }
-                }).catch((error) => {
-                    console.error("Error fetching user:", error);
-                    document.body.innerHTML = "<h1>Error: Unable to fetch user</h1>";
-                });
-            } else {
-                window.location.href = `/index.html`;
-            }
-        });
-    </script>
-</head>
-<body>
-    <h1>Searching User...</h1>
-</body>
-</html>
+<link rel="manifest" href="/site.webmanifest"><script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script><script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script><style>body {display: flex;flex-direction: row;align-items: center;justify-content: center;text-align: center;height: 99vh;}</style><script>var _0x39c2fb=_0x2e6d;function _0x17e1(){var _0x28a961=['then','users','get','1408345bzDSns','10206200DVmmMx','355QxRHqj','location','4311GRxPIO','91452bnxLAb','doc','5109800cYNaKh','/index.html','1:152307243781:web:f9e7787bcab188aefa756c','anonymous-messages-692c3.appspot.com','pop','82231358cvWTsu','body','662940pstHul','toLowerCase','7IRfVKR','error','120jftjoe','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div><h1>Error:\x20User\x20not\x20found</h1>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>The\x20user\x20you\x27re\x20looking\x20for\x20doesn\x27t\x20exist.<br>Go\x20to\x20<a\x20href=\x22https://dakbaksho.github.io/\x22\x20style=\x22text-decoration:\x20none;\x22>Homepage</a></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','pathname','152307243781','<h1>Error:\x20Unable\x20to\x20fetch\x20user</h1>','collection','1174NFwnQH','href','/user.html?user=','catch','innerHTML'];_0x17e1=function(){return _0x28a961;};return _0x17e1();}(function(_0x456e88,_0x4d8fe6){var _0xb2c960=_0x2e6d,_0x159572=_0x456e88();while(!![]){try{var _0x8482e8=-parseInt(_0xb2c960(0x133))/0x1+parseInt(_0xb2c960(0x12b))/0x2*(-parseInt(_0xb2c960(0x137))/0x3)+-parseInt(_0xb2c960(0x11a))/0x4+parseInt(_0xb2c960(0x135))/0x5*(-parseInt(_0xb2c960(0x138))/0x6)+parseInt(_0xb2c960(0x123))/0x7*(-parseInt(_0xb2c960(0x134))/0x8)+parseInt(_0xb2c960(0x121))/0x9*(-parseInt(_0xb2c960(0x125))/0xa)+parseInt(_0xb2c960(0x11f))/0xb;if(_0x8482e8===_0x4d8fe6)break;else _0x159572['push'](_0x159572['shift']());}catch(_0x446203){_0x159572['push'](_0x159572['shift']());}}}(_0x17e1,0xabf83));var firebaseConfig={'apiKey':'AIzaSyAvC3w2OJatNPTfOD0YE5-v24XYul2vg7s','authDomain':'anonymous-messages-692c3.firebaseapp.com','projectId':'anonymous-messages-692c3','storageBucket':_0x39c2fb(0x11d),'messagingSenderId':_0x39c2fb(0x128),'appId':_0x39c2fb(0x11c)};firebase['initializeApp'](firebaseConfig);var db=firebase['firestore']();function _0x2e6d(_0xad3c89,_0x1de836){var _0x17e1d1=_0x17e1();return _0x2e6d=function(_0x2e6d29,_0x171aef){_0x2e6d29=_0x2e6d29-0x11a;var _0x1ce18f=_0x17e1d1[_0x2e6d29];return _0x1ce18f;},_0x2e6d(_0xad3c89,_0x1de836);}document['addEventListener']('DOMContentLoaded',function(){var _0x5f07fa=_0x39c2fb,_0x22d05d=window[_0x5f07fa(0x136)][_0x5f07fa(0x127)][_0x5f07fa(0x122)](),_0x325f81=_0x22d05d['split']('/')[_0x5f07fa(0x11e)]();_0x325f81?db[_0x5f07fa(0x12a)](_0x5f07fa(0x131))[_0x5f07fa(0x139)](_0x325f81)[_0x5f07fa(0x132)]()[_0x5f07fa(0x130)](_0x2c3fb2=>{var _0x502f73=_0x5f07fa;if(_0x2c3fb2['exists'])window[_0x502f73(0x136)][_0x502f73(0x12c)]=_0x502f73(0x12d)+_0x325f81;else{document[_0x502f73(0x120)][_0x502f73(0x12f)]=_0x502f73(0x126);;}})[_0x5f07fa(0x12e)](_0x2d1f56=>{var _0x2a6eaf=_0x5f07fa;console[_0x2a6eaf(0x124)]('Error\x20fetching\x20user:',_0x2d1f56),document[_0x2a6eaf(0x120)][_0x2a6eaf(0x12f)]=_0x2a6eaf(0x129);}):window[_0x5f07fa(0x136)][_0x5f07fa(0x12c)]=_0x5f07fa(0x11b);});</script></head><body><h1>Searching User...</h1></body></html>
