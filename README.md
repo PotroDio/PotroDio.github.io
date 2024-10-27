@@ -5,6 +5,8 @@ Check out the project live on GitHub Pages:
 
 [DakBaksho - Anonymous Message Sender](https://dakbaksho.github.io/)
 
+<img src="/files/metaimage.jpg" alt="DakBaksho" width="600" />
+
 
 **Note: Please do not copy this code without permission. This project is intended as a learning resource and to inspire original development.**
 
